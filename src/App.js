@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <Panel oldnew="old"></Panel>
       <Or></Or>
-      <Test></Test>
+      <GetApiData></GetApiData>
       <Panel oldnew="new"></Panel>
 
     </div>
@@ -26,7 +26,7 @@ function Panel(props){
   return(
     <div className="panel" onClick={clickPanel}>
       
-      <h1>{props.oldnew}<Test></Test></h1>
+      <h1>{props.oldnew}<GetApiData></GetApiData></h1>
     </div>
   )
 }
@@ -39,9 +39,8 @@ function Or(){
   )
 }
 
-function Test(){
+function GetApiData(){
   const [data,setData] = useState();
-  const [test,setTest] = useState();
 
   useEffect(() => {
 
