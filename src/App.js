@@ -1,3 +1,4 @@
+import "./App.css"
 import React, { useEffect, useState } from "react"
 import Panel from "./Panel.js"
 
