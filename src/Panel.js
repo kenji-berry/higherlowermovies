@@ -46,7 +46,7 @@ function Panel(props){
     }
   
     return(
-        <div className='panel' id='panel' style={{ backgroundImage:`url(${movie.image})`, backgroundRepeat:"no-repeat",backgroundSize:"100% 100%"}}>  
+        <div className='panel' id='panel' style={{ backgroundImage:`url(${movie.image})`, backgroundRepeat:"no-repeat",backgroundSize:"100% 100%"}} onClick={clickPanel}>  
             <div id="panel-text">
                 <p id="movie-name">{movie.name}</p>
                 <p>({movie.year})</p>
