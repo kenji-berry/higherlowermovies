@@ -4,17 +4,6 @@
   flex-direction: row;
 }
 
-.panel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50vw;
-  height: 100vh;
-  background-color: red;
-  border: 1px solid black;
-
-}
-
 .divOr {
   display: flex;
   justify-content: center;

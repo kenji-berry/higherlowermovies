@@ -1,0 +1,33 @@
+.panel{
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    height: 100vh;
+    background-color: red;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.panel:hover{
+
+    filter: brightness(50%);
+}
+
+
+#panel-text{
+    background-color: #EFEFEF;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+
+    
+}
+
+#movie-name{
+    font-weight: bolder;
+}
+
