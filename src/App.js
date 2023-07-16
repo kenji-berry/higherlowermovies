@@ -4,8 +4,23 @@ import Panel from "./Panel.js"
 
 function App() {
 
-  const click123 = () =>{
-    console.log("click")
+  const compare = panelData =>{
+    if (panelData === "1"){
+      if (movie[panelData].rating >= movie[2].rating){
+        console.log("higher")
+      }
+      else{
+        console.log("lower")
+      }
+    }
+    else{
+      if (movie[panelData].rating >= movie[1].rating){
+        console.log("higher")
+      }
+      else{
+        console.log("lower")
+      }
+    }
   }
 
 
@@ -48,15 +63,15 @@ function App() {
 
         })
     })
-  }, [movie.length == 2])
+  }, [movie.length === 2])
 
   if(isLoading === true) return <div>Loading...</div>
   else{
     return (
       <div className="App">
-        <Panel onClick={click123} oldnew="old" movie={movie[1]}></Panel>
+        <Panel onClick={compare} panelNum="1" movie={movie[1]}></Panel>
         <Or></Or>
-        <Panel onClick={click123} oldnew="new" movie={movie[2]}></Panel>
+        <Panel onClick={compare} panelNum="2" movie={movie[2]}></Panel>
 
           <div class="custom-shape-divider-top-1689271681">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
