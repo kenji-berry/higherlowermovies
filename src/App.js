@@ -23,6 +23,39 @@ function App() {
     }
   }
 
+  function getRandomMovie(){
+    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
+        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
+      }
+    };
+    setisLoading(true)
+    fetch(url, options)
+    .then(response =>  response.json())
+    .then(data=> data.results[0])
+    .then(data =>{
+        const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
+        fetch(ratingUrl,options)
+        .then(response => response.json())
+        .then(rating=>{
+            rating = rating.results
+            console.log(rating)
+            console.log(movie)
+
+            setMovie([...movie, new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
+
+
+            setisLoading(false)
+
+
+        })
+    })
+  }
+
+
 
   function RandomMovie(image,name,year,rating,numVotes) {
     this.image = image;
@@ -33,6 +66,8 @@ function App() {
   }
   let [movie,setMovie] = useState([{}])
   const [isLoading,setisLoading] = useState(true)
+  let [score,setScore] = useState(0)
+
   useEffect(() => {
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
@@ -71,7 +106,7 @@ function App() {
       <div className="App">
         <Panel onClick={compare} panelNum="1" movie={movie[1]}></Panel>
         <Or></Or>
-        <Panel onClick={compare} panelNum="2" movie={movie[2]}></Panel>
+        <Panel onClick={compare} panelNum="2" movie={movie[2+score]}></Panel>
 
           <div class="custom-shape-divider-top-1689271681">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -87,9 +122,11 @@ function App() {
             <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
         </svg>
       </div>
+      <button onClick={getRandomMovie}>hellooo</button>
       </div>
     );
   }
+
   
 }
 
