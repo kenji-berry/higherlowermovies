@@ -4,26 +4,32 @@ import Panel from "./Panel.js"
 
 function App() {
 
-  const compare = panelData =>{
-    if (panelData === "1"){
-      if (movie[panelData].rating >= movie[2].rating){
-        console.log("higher")
+  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
+    console.log(whichPanel)
+    if (whichPanel === "1"){
+      if (movie[movieDataFromPanel[0]].rating >= movie[movieDataFromPanel[1]].rating){
+        console.log("higher1")
+        updatePanelFunc(whichPanel)
       }
       else{
-        console.log("lower")
+        console.log("lower1")
+        updatePanelFunc(whichPanel)
       }
     }
     else{
-      if (movie[panelData].rating >= movie[1].rating){
-        console.log("higher")
+      if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
+        console.log("higher2")
+        updatePanelFunc(whichPanel)
       }
       else{
-        console.log("lower")
+        console.log("lower2")
+        updatePanelFunc(whichPanel)
       }
     }
-  }
+    }
+  
 
-  function getRandomMovie(){
+  const getRandomMovie = whichPanel=>{
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
       method: 'GET',
@@ -46,7 +52,14 @@ function App() {
             console.log(movie)
 
             setMovie([...movie, new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
-
+            if (whichPanel === "1"){
+              console.log(setPanelNum([panelNum[0]+1,panelNum[1]]))
+            }
+            else{
+              while(panelNum[1]<=panelNum[0]){
+                setPanelNum([panelNum[0],panelNum[1]+1])
+              }
+            }
 
             setisLoading(false)
 
@@ -66,7 +79,7 @@ function App() {
   }
   let [movie,setMovie] = useState([{}])
   const [isLoading,setisLoading] = useState(true)
-  let [score,setScore] = useState(0)
+  let [panelNum,setPanelNum] = useState([1,2])
 
   useEffect(() => {
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
@@ -104,9 +117,9 @@ function App() {
   else{
     return (
       <div className="App">
-        <Panel onClick={compare} panelNum="1" movie={movie[1]}></Panel>
+        <Panel onClick={[compare, getRandomMovie]} panelNumber="1" panelNumArr={panelNum} movie={movie[panelNum[0]]}></Panel>
         <Or></Or>
-        <Panel onClick={compare} panelNum="2" movie={movie[2+score]}></Panel>
+        <Panel onClick={[compare,getRandomMovie]} panelNumber="2" panelNumArr={panelNum} movie={movie[panelNum[1]]}></Panel>
 
           <div class="custom-shape-divider-top-1689271681">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

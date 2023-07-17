@@ -9,7 +9,7 @@ function Panel(props){
     console.log(movie)
 
     return(
-        <div className='panel' id='panel' onClick={event => clickfunction(props.panelNum)} style={{backgroundImage: `url(${movie.image})`, backgroundSize: "cover", backgroundPosition: "center center"}}>  
+        <div className='panel' id='panel' onClick={event => clickfunction[0](props.panelNumber,props.panelNumArr,clickfunction[1])} style={{backgroundImage: `url(${movie.image})`, backgroundSize: "cover", backgroundPosition: "center center"}}>  
             <div id="panel-text">
               <div>{movie.name}</div>
               <div>({movie.rating})</div>
