@@ -9,7 +9,8 @@
     width: 40vw;
     height: 100vh;
     aspect-ratio: 2/3;
-    background-color: red;
+    background-image: url("Image-Not-Available.png");
+    background-color: black;
     border-left: 5px solid black;
     border-right: 5px solid black;
     cursor: pointer;
