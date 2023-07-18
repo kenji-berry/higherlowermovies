@@ -77,17 +77,16 @@ function App() {
 
 
 
-  function RandomMovie(image,name,year,rating,numVotes) {
+  function RandomMovie(image,name,rating,numVotes) {
     this.image = image;
     this.name = name;
-    this.year = year;
     this.rating = rating;
     this.numVotes = numVotes;
   }
 
 
   useEffect(() => {
-    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
+    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&info=image&list=top_rated_english_250';
     const options = {
       method: 'GET',
       headers: {
@@ -100,6 +99,7 @@ function App() {
     .then(response =>  response.json())
     .then(data=> data.results[0])
     .then(data =>{
+        console.log(data)
         const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
         fetch(ratingUrl,options)
         .then(response => response.json())
@@ -107,16 +107,21 @@ function App() {
             rating = rating.results
             console.log(rating)
             console.log(movie)
+            let title = data.primaryImage.caption.plainText
+            if (title.includes("in")){
+              let splitPoint = title.indexOf("in")
+              title.slice(splitPoint)
+            }
+            console.log(title)
+            setMovie([...movie, new RandomMovie(data.primaryImage.url,title,rating.averageRating,rating.numVotes)]) 
 
-            setMovie([...movie, new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
-
-            if (movie.length===3){
+            if (movie.length===2){
               setisLoading(false)
             }
 
         })
     })
-  }, [movie.length === 2])
+  }, [movie.length === 1])
 
   if(isLoading === true) return <div>Loading...</div>
   else{
@@ -158,8 +163,10 @@ function Or(props){
   return (
     <div>
     <div className="divOr">
-      <p>Highscore: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
-      <p>Score: {props.score}</p>
+      <div className="scoresMiddle">
+        <p>HIGHSCORE: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
+        <p>SCORE: {props.score}</p>
+      </div>
       <h2 className="Or">OR</h2>
     </div>
 

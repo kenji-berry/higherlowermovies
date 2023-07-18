@@ -7,12 +7,11 @@
     align-items: center;
     justify-content: center;
     width: 40vw;
-    height: 100vh;
-    aspect-ratio: 2/3;
+    height: 99vh;
+
     background-image: url("Image-Not-Available.png");
     background-color: black;
-    border-left: 5px solid black;
-    border-right: 5px solid black;
+    border:0.5vh solid black;
     cursor: pointer;
     z-index: 10;
 }
