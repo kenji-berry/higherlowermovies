@@ -161,6 +161,7 @@ function Or(props){
   return (
     <div>
     <div className="divOr">
+      <p>Highscore: {localStorage.getItem("score") ? localStorage.getItem("score") : 0}</p>
       <p>Score: {props.score}</p>
       <h2 className="Or">OR</h2>
     </div>
