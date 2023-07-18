@@ -3,33 +3,33 @@ import React, { useEffect, useState } from "react"
 import Panel from "./Panel.js"
 
 function App() {
-
-  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
+  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc,setPanelNum) =>{
     console.log(whichPanel)
     if (whichPanel === "1"){
       if (movie[movieDataFromPanel[0]].rating >= movie[movieDataFromPanel[1]].rating){
         console.log("higher1")
-        updatePanelFunc(whichPanel)
+        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
       }
       else{
         console.log("lower1")
-        updatePanelFunc(whichPanel)
+        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
       }
     }
     else{
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
         console.log("higher2")
-        updatePanelFunc(whichPanel)
+        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
       }
       else{
         console.log("lower2")
-        updatePanelFunc(whichPanel)
+        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
       }
     }
     }
   
 
-  const getRandomMovie = whichPanel=>{
+  const getRandomMovie = (whichPanel,panelNum,setPanelNum)=>{
+    let count=0;
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
       method: 'GET',
@@ -50,16 +50,14 @@ function App() {
             rating = rating.results
             console.log(rating)
             console.log(movie)
-
-            setMovie([...movie, new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
-            if (whichPanel === "1"){
-              console.log(setPanelNum([panelNum[0]+1,panelNum[1]]))
+            if (whichPanel ==="1"){
+              setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[1]]) 
             }
             else{
-              while(panelNum[1]<=panelNum[0]){
-                setPanelNum([panelNum[0],panelNum[1]+1])
-              }
+              setMovie([movie[0], movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
             }
+
+            console.log(movie)
 
             setisLoading(false)
 
@@ -117,9 +115,9 @@ function App() {
   else{
     return (
       <div className="App">
-        <Panel onClick={[compare, getRandomMovie]} panelNumber="1" panelNumArr={panelNum} movie={movie[panelNum[0]]}></Panel>
+        <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[panelNum[0]]}></Panel>
         <Or></Or>
-        <Panel onClick={[compare,getRandomMovie]} panelNumber="2" panelNumArr={panelNum} movie={movie[panelNum[1]]}></Panel>
+        <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[panelNum[1]]}></Panel>
 
           <div class="custom-shape-divider-top-1689271681">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
