@@ -48,16 +48,14 @@ function App() {
         .then(response => response.json())
         .then(rating=>{
             rating = rating.results
-            console.log(rating)
-            console.log(movie)
-            if (whichPanel ==="1"){
-              setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[1]]) 
+
+            if (whichPanel == "1"){
+              setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[2]]) 
             }
             else{
-              setMovie([movie[0], movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
+              setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
             }
 
-            console.log(movie)
 
             setisLoading(false)
 
@@ -115,9 +113,9 @@ function App() {
   else{
     return (
       <div className="App">
-        <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[panelNum[0]]}></Panel>
+        <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
         <Or></Or>
-        <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[panelNum[1]]}></Panel>
+        <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
 
           <div class="custom-shape-divider-top-1689271681">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
