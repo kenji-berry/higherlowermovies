@@ -8,14 +8,7 @@ function App() {
   let [panelNum,setPanelNum] = useState([1,2])
   const [score,setScore] = useState(0)
 
-  const newHighScore = (score) =>{
 
-    if (score>localStorage.getItem("score")){
-      console.log("hello")
-      console.log(score)
-      localStorage.setItem("score",score)
-    }
-  }
 
 
   const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
@@ -78,7 +71,6 @@ function App() {
             
             console.log(score)
             setisLoading(false)
-            newHighScore(score)
         })
     })
   }
@@ -157,10 +149,16 @@ function App() {
 
 
 function Or(props){
+  const newHighScore = (score) =>{
+    if (score>localStorage.getItem("HighScore")){
+      localStorage.setItem("HighScore",score)
+    }
+  }
+  newHighScore(props.score)
   return (
     <div>
     <div className="divOr">
-      <p>Highscore: {localStorage.getItem("score") ? localStorage.getItem("score") : 0}</p>
+      <p>Highscore: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
       <p>Score: {props.score}</p>
       <h2 className="Or">OR</h2>
     </div>
