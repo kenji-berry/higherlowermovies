@@ -3,33 +3,53 @@ import React, { useEffect, useState } from "react"
 import Panel from "./Panel.js"
 
 function App() {
-  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc,setPanelNum) =>{
+  let [movie,setMovie] = useState([{}])
+  const [isLoading,setisLoading] = useState(true)
+  let [panelNum,setPanelNum] = useState([1,2])
+  const [score,setScore] = useState(0)
+
+  const newHighScore = (score) =>{
+
+    if (score>localStorage.getItem("score")){
+      console.log("hello")
+      console.log(score)
+      localStorage.setItem("score",score)
+    }
+  }
+
+
+  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
     console.log(whichPanel)
     if (whichPanel === "1"){
       if (movie[movieDataFromPanel[0]].rating >= movie[movieDataFromPanel[1]].rating){
         console.log("higher1")
-        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
+        setScore(score+1)
+        console.log(score)
+
+        updatePanelFunc(whichPanel, movieDataFromPanel)
       }
       else{
         console.log("lower1")
-        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
+        updatePanelFunc(whichPanel, movieDataFromPanel)
       }
     }
     else{
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
         console.log("higher2")
-        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
+        setScore(score+1)
+        console.log(score)
+        updatePanelFunc(whichPanel, movieDataFromPanel)
       }
       else{
         console.log("lower2")
-        updatePanelFunc(whichPanel, movieDataFromPanel,setPanelNum)
+        updatePanelFunc(whichPanel, movieDataFromPanel)
       }
     }
+
     }
   
 
-  const getRandomMovie = (whichPanel,panelNum,setPanelNum)=>{
-    let count=0;
+  const getRandomMovie = (whichPanel)=>{
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
       method: 'GET',
@@ -55,11 +75,10 @@ function App() {
             else{
               setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
             }
-
-
+            
+            console.log(score)
             setisLoading(false)
-
-
+            newHighScore(score)
         })
     })
   }
@@ -73,9 +92,7 @@ function App() {
     this.rating = rating;
     this.numVotes = numVotes;
   }
-  let [movie,setMovie] = useState([{}])
-  const [isLoading,setisLoading] = useState(true)
-  let [panelNum,setPanelNum] = useState([1,2])
+
 
   useEffect(() => {
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
@@ -114,7 +131,7 @@ function App() {
     return (
       <div className="App">
         <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
-        <Or></Or>
+        <Or score={score}></Or>
         <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
 
           <div class="custom-shape-divider-top-1689271681">
@@ -140,10 +157,11 @@ function App() {
 }
 
 
-function Or(){
+function Or(props){
   return (
     <div>
     <div className="divOr">
+      <p>Score: {props.score}</p>
       <h2 className="Or">OR</h2>
     </div>
 
