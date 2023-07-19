@@ -23,7 +23,12 @@ function App() {
       }
       else{
         console.log("lower1")
-        updatePanelFunc(whichPanel, movieDataFromPanel)
+        const removePanel = (panel) =>{
+          console.log(panel)
+        }s
+        const panels = document.getElementsByClassName("panel")
+        panels.map(removePanel)
+
       }
     }
     else{
@@ -34,8 +39,13 @@ function App() {
         updatePanelFunc(whichPanel, movieDataFromPanel)
       }
       else{
+        const removePanel = (panel) =>{
+          console.log(panel)
+        }
         console.log("lower2")
-        updatePanelFunc(whichPanel, movieDataFromPanel)
+        const panels = document.getElementsByClassName("panel")
+        panels.map(removePanel)
+
       }
     }
 
