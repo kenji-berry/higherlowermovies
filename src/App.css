@@ -20,6 +20,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 0.5rem;
+
 
 }
 
@@ -28,6 +30,7 @@
   background-color: aquamarine;
   padding: 1rem;
   border-radius: 3rem;
+  padding: 0.5rem;
 }
 
 .custom-shape-divider-top-1689271681 {
@@ -105,3 +108,4 @@
   flex-direction: column;
   background-color: red;
 }
+
