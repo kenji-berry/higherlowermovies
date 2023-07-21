@@ -15,47 +15,55 @@ function App() {
 
 
   const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
-    const changePanel = (element) =>{
-      element.style.borderColor="green"
-      element.style.borderSize="1vh"
+    const removePanels = () =>{
+      const a =document.getElementsByClassName("toHide")[0]
+      a.style.display="none"
+      setLost(true)
     }
+
+    const changePanel = (colour) =>{        
+      let panels = document.getElementsByClassName("panel")
+      panels = Array.prototype.slice.call(panels)
+      const changePanel = (element) =>{
+        element.style.borderColor=colour
+        element.style.borderWidth="1vh"
+      }
+      panels.forEach(changePanel)
+    }
+
     console.log(whichPanel)
+
     if (whichPanel === "1"){
       if (movie[movieDataFromPanel[0]].rating >= movie[movieDataFromPanel[1]].rating){
         console.log("higher1")
         setScore(score+1)
-        setTimeout(console.log("1-0 seconds"),10000)
-        setTimeout(updatePanelFunc(whichPanel, movieDataFromPanel),3000)
-        let panels = document.getElementsByClassName("panel")
-        panels = Array.prototype.slice.call(panels)
-        panels.forEach(changePanel)
-        console.log(score)
-
+        changePanel("#34b233")
+        setTimeout(() => {getRandomMovie(whichPanel)},3000)
         
       }
       else{
         console.log("lower1")
-        const a =document.getElementsByClassName("toHide")[0]
-        a.style.display="none"
-        setLost(true)
-
+        changePanel("#ff2a26")
+        
+        setTimeout(() => {removePanels()},3000)
       }
     }
     else{
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
         console.log("higher1")
         setScore(score+1)
+        setTimeout(() => {getRandomMovie(whichPanel)},3000)
 
-        let panels = document.getElementsByClassName("panel")
-        panels = Array.prototype.slice.call(panels)
-        panels.forEach(changePanel)
+        changePanel("#34b233")
       }
       else{
         
         console.log("lower2")
         const a =document.getElementsByClassName("toHide")[0]
-        a.style.display="none"
-        setLost(true)
+        changePanel("#ff2a26")
+
+        setTimeout(() => {removePanels()},3000)
+
       }
     }
 
@@ -139,16 +147,7 @@ function App() {
         })
     })
   }
-  const testing = () =>{        
-    let panels = document.getElementsByClassName("panel")
-    panels = Array.prototype.slice.call(panels)
-    const changePanel = (element) =>{
-      element.style.borderColor="lightgreen"
-      element.style.borderWidth="1vh"
-    }
-    panels.forEach(changePanel)
-    setTimeout(() => {getRandomMovie("1")},3000)
-  }
+
 
 
   useEffect(() => {
@@ -172,7 +171,6 @@ function App() {
         <div className="toHide">
           <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
           <Or score={score}></Or>
-          <button onClick={testing}>aaaaaaaaaaaaaa</button>
           <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
         </div>
 
