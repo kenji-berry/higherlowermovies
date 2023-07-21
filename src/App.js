@@ -21,26 +21,6 @@ function App() {
       setLost(true)
     }
 
-    function showRating(rating){
-      console.log(document.getElementById("rating"))
-      document.getElementById("rating").style.opacity="100"
-      let startValue=1;
-      whichPanel = parseInt(whichPanel)
-      let endValue=movie[movieDataFromPanel[whichPanel-1]].rating;
-      console.log(endValue)
-      let duration = 30
-      let counter = setInterval(function(){
-        duration+=100
-        startValue+=0.1;
-        startValue = Math.round(startValue*10)/10
-        document.getElementById("rating").textContent=startValue;
-        if(startValue === endValue){
-          clearInterval(counter)
-        }
-      }, duration)
-    }
-
-
     const changePanel = (colour) =>{        
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
@@ -58,14 +38,12 @@ function App() {
         console.log("higher1")
         setScore(score+1)
         changePanel("#34b233")
-        showRating()
         setTimeout(() => {getRandomMovie(whichPanel)},3000)
         
       }
       else{
         console.log("lower1")
         changePanel("#ff2a26")
-        showRating()
         setTimeout(() => {removePanels()},3000)
       }
     }
@@ -73,16 +51,13 @@ function App() {
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
         console.log("higher1")
         setScore(score+1)
-        showRating()
         setTimeout(() => {getRandomMovie(whichPanel)},3000)
         changePanel("#34b233")
       }
       else{
-        
         console.log("lower2")
         const a =document.getElementsByClassName("toHide")[0]
         changePanel("#ff2a26")
-        showRating()
         setTimeout(() => {removePanels()},3000)
 
       }
