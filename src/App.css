@@ -6,7 +6,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: coral;
+  background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(166,166,166,1) 37%, rgba(147,147,147,1) 79%, rgba(255,255,255,1) 100%);
 }
 
 .toHide{
