@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react"
 function Panel(props){
   console.log(props)
   const showRating= () =>{
-    let startValue=0;
+    document.getElementById("rating").style.opacity="100"
+    let startValue=1;
     let endValue=props.movie.rating;
     let duration = 30
     let counter = setInterval(function(){
@@ -30,7 +31,7 @@ function Panel(props){
         <div className='panel' id='panel' onClick={event => clickfunction[0](props.panelNumber,props.panelNumArr,clickfunction[1],props.setPanelNum)} style={{backgroundImage: `url(${movie.image})`, backgroundSize: "cover", backgroundPosition: "center center"}}>  
             <div id="panel-text">
               <div>{movie.name} ({movie.year})</div>
-              <div id="rating">;</div>
+              <div id="rating">1</div>
               <div>{movie.numVotes}</div>
 
             </div>  

@@ -19,7 +19,10 @@
     z-index: 11;
 }
 
-
+#rating{
+    transition: 1s;
+    opacity: 0;
+}
 
 
 
