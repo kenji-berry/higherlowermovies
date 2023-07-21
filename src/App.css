@@ -20,6 +20,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
 }
 
 .Or {
@@ -77,6 +78,11 @@
   font-weight:700;
   font-size: 1rem;
   background-color: blueviolet;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .loading{
@@ -91,10 +97,11 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  flex-direction: column;
-  background-color: blue;
+
 }
 
-#hideLost{
+.inner{
   display: flex;
+  flex-direction: column;
+  background-color: red;
 }

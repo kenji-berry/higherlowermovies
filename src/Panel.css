@@ -9,14 +9,14 @@
     justify-content: center;
     width: 40vw;
     height: 99vh;
-
+    transform: scale(1);
     background-image: url("Image-Not-Available.png");
     background-color: black;
     border-width:0.5vh;
     border-style: solid;
     border-color:white;
     cursor: pointer;
-    z-index: 10;
+    z-index: 11;
 }
 
 

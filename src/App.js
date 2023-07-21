@@ -26,7 +26,7 @@ function App() {
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
         element.style.borderColor=colour
-        element.style.borderWidth="1vh"
+        element.style.transform="scale(0.8)"
       }
       panels.forEach(changePanel)
     }
@@ -38,6 +38,7 @@ function App() {
         console.log("higher1")
         setScore(score+1)
         changePanel("#34b233")
+        
         setTimeout(() => {getRandomMovie(whichPanel)},3000)
         
       }
@@ -52,8 +53,8 @@ function App() {
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
         console.log("higher1")
         setScore(score+1)
-        setTimeout(() => {getRandomMovie(whichPanel)},3000)
 
+        setTimeout(() => {getRandomMovie(whichPanel)},3000)
         changePanel("#34b233")
       }
       else{
@@ -210,8 +211,9 @@ function Or(props){
       <div className="scoresMiddle">
         <p>HIGHSCORE: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
         <p>SCORE: {props.score}</p>
+        <h2 className="Or">OR</h2>
       </div>
-      <h2 className="Or">OR</h2>
+
     </div>
 
   </div>
@@ -222,8 +224,11 @@ function Lost(props){
   if (props.isLost){
     return (
       <div className="lost" id="hideLost">
+        <div className="inner">
         You lost !
         <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
+        </div>
+
       </div>
     )
   }
