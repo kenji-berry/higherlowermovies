@@ -14,7 +14,7 @@ function App() {
 
 
 
-  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
+  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc)=>{
     const removePanels = () =>{
       const a =document.getElementsByClassName("toHide")[0]
       a.style.display="none"
@@ -67,7 +67,31 @@ function App() {
         setScore(score+1)
         changePanel("#34b233")
         test()
-        setTimeout(() => {getRandomMovie(whichPanel)},3000)
+        const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
+        const options = {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
+            'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
+          }
+        };
+
+        fetch(url, options)
+        .then(response =>  response.json())
+        .then(data=> data.results[0])
+        .then(data =>{
+          
+            const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
+            fetch(ratingUrl,options)
+            .then(response => response.json())
+            .then(rating=>{
+              rating = rating.results
+              console.log(data)
+              console.log(rating)
+              setTimeout(() => {setRandomMovie(whichPanel,data,rating)},3000)
+            })
+        })
+        
         
       }
       else{
@@ -82,7 +106,15 @@ function App() {
         console.log("higher1")
         setScore(score+1)
         test()
-        setTimeout(() => {getRandomMovie(whichPanel)},3000)
+        function getRandomMovies() {
+          return new Promise(resolve => resolve("hlloe"))
+        }
+        async function asyncCall(){
+          console.log("calling")
+          const result = await getRandomMovies();
+          console.log(result);
+        }
+        asyncCall();
         changePanel("#34b233")
       }
       else{
@@ -98,7 +130,8 @@ function App() {
     }
   
 
-  const getRandomMovie = (whichPanel)=>{
+  function getRandomMovie(){
+
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
       method: 'GET',
@@ -107,30 +140,30 @@ function App() {
         'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
       }
     };
-    setisLoading(true)
+
     fetch(url, options)
     .then(response =>  response.json())
     .then(data=> data.results[0])
     .then(data =>{
+      
         const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
         fetch(ratingUrl,options)
         .then(response => response.json())
         .then(rating=>{
-            rating = rating.results
-
-            if (whichPanel == "1"){
-              setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[2]]) 
-            }
-            else{
-              setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
-            }
-            
-            console.log(score)
-            setisLoading(false)
+            return new Promise(resolve => resolve("hlloe"))
         })
     })
   }
 
+  const setRandomMovie = (whichPanel,data,rating) =>{
+    if (whichPanel == "1"){
+
+      setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[2]]) 
+    }
+    else{
+      setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
+    }
+  }
 
 
   function RandomMovie(image,name,year,rating,numVotes) {
@@ -199,9 +232,9 @@ function App() {
         {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
         
         <div className="toHide">
-          <Panel onClick={[compare, getRandomMovie,test]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
+          <Panel onClick={[compare, getRandomMovie,test,setRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
           <Or score={score}></Or>
-          <Panel onClick={[compare,getRandomMovie, test]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
+          <Panel onClick={[compare,getRandomMovie, test,setRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
         </div>
 
 
