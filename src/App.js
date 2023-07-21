@@ -15,37 +15,46 @@ function App() {
 
 
   const compare = (whichPanel,movieDataFromPanel,updatePanelFunc) =>{
+    const changePanel = (element) =>{
+      element.style.borderColor="green"
+      element.style.borderSize="1vh"
+    }
     console.log(whichPanel)
     if (whichPanel === "1"){
       if (movie[movieDataFromPanel[0]].rating >= movie[movieDataFromPanel[1]].rating){
         console.log("higher1")
         setScore(score+1)
+        setTimeout(console.log("1-0 seconds"),10000)
+        setTimeout(updatePanelFunc(whichPanel, movieDataFromPanel),3000)
+        let panels = document.getElementsByClassName("panel")
+        panels = Array.prototype.slice.call(panels)
+        panels.forEach(changePanel)
         console.log(score)
 
-        updatePanelFunc(whichPanel, movieDataFromPanel)
+        
       }
       else{
         console.log("lower1")
         const a =document.getElementsByClassName("toHide")[0]
-        a.style.visibility="hidden"
-        a.style.opacity="0"
+        a.style.display="none"
         setLost(true)
 
       }
     }
     else{
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
-        console.log("higher2")
+        console.log("higher1")
         setScore(score+1)
-        console.log(score)
-        updatePanelFunc(whichPanel, movieDataFromPanel)
+
+        let panels = document.getElementsByClassName("panel")
+        panels = Array.prototype.slice.call(panels)
+        panels.forEach(changePanel)
       }
       else{
         
         console.log("lower2")
         const a =document.getElementsByClassName("toHide")[0]
-        a.style.visibility="hidden"
-        a.style.opacity="0"
+        a.style.display="none"
         setLost(true)
       }
     }
@@ -98,6 +107,7 @@ function App() {
 
 
   const setUpGame = () => {
+    setLost(false)
     setScore(0)
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
@@ -129,6 +139,18 @@ function App() {
         })
     })
   }
+  const testing = () =>{        
+    let panels = document.getElementsByClassName("panel")
+    panels = Array.prototype.slice.call(panels)
+    const changePanel = (element) =>{
+      element.style.borderColor="lightgreen"
+      element.style.borderWidth="1vh"
+    }
+    panels.forEach(changePanel)
+    setTimeout(() => {getRandomMovie("1")},3000)
+  }
+
+
   useEffect(() => {
     setUpGame()
   }, [movie.length === 1])
@@ -141,13 +163,16 @@ function App() {
     )
   }
 
+
   else{
     return (
       <div className="App">
-        <Lost isLost={lost} newGame={setUpGame}></Lost>
+        {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
+        
         <div className="toHide">
           <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
           <Or score={score}></Or>
+          <button onClick={testing}>aaaaaaaaaaaaaa</button>
           <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
         </div>
 
@@ -198,9 +223,9 @@ function Or(props){
 function Lost(props){
   if (props.isLost){
     return (
-      <div className="lost">
+      <div className="lost" id="hideLost">
         You lost !
-        <button type="button" onClick={props.newGame}>Play Again</button>
+        <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
       </div>
     )
   }

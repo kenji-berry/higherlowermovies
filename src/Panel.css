@@ -12,7 +12,9 @@
 
     background-image: url("Image-Not-Available.png");
     background-color: black;
-    border:0.5vh solid black;
+    border-width:0.5vh;
+    border-style: solid;
+    border-color:white;
     cursor: pointer;
     z-index: 10;
 }
