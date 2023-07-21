@@ -1,13 +1,15 @@
 import "./App.css"
 import React, { useEffect, useState } from "react"
 import Panel from "./Panel.js"
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 function App() {
   let [movie,setMovie] = useState([{}])
   const [isLoading,setisLoading] = useState(true)
   let [panelNum,setPanelNum] = useState([1,2])
   const [score,setScore] = useState(0)
-  const [hidden,setHidden] = useState(false)
+  const[lost,setLost] = useState(false)
+
 
 
 
@@ -24,7 +26,10 @@ function App() {
       }
       else{
         console.log("lower1")
-        setHidden(true)
+        const a =document.getElementsByClassName("toHide")[0]
+        a.style.visibility="hidden"
+        a.style.opacity="0"
+        setLost(true)
 
       }
     }
@@ -36,9 +41,12 @@ function App() {
         updatePanelFunc(whichPanel, movieDataFromPanel)
       }
       else{
-
+        
         console.log("lower2")
-        setHidden(true)
+        const a =document.getElementsByClassName("toHide")[0]
+        a.style.visibility="hidden"
+        a.style.opacity="0"
+        setLost(true)
       }
     }
 
@@ -89,7 +97,8 @@ function App() {
   }
 
 
-  useEffect(() => {
+  const setUpGame = () => {
+    setScore(0)
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
       method: 'GET',
@@ -119,16 +128,30 @@ function App() {
 
         })
     })
+  }
+  useEffect(() => {
+    setUpGame()
   }, [movie.length === 1])
 
-  if(isLoading === true) return <div>Loading...</div>
+  if(isLoading === true) {
+    return (      
+      <div className="loading">
+        <PropagateLoader color="#36d7b7" />
+      </div>
+    )
+  }
+
   else{
     return (
       <div className="App">
-        {!hidden ? <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>: null}
-        {!hidden ?<Or score={score}></Or>: null}
-        {!hidden ?<Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>: null}
-        {hidden ? <div>lost</div>: null}
+        <Lost isLost={lost} newGame={setUpGame}></Lost>
+        <div className="toHide">
+          <Panel onClick={[compare, getRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
+          <Or score={score}></Or>
+          <Panel onClick={[compare,getRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
+        </div>
+
+
           <div class="custom-shape-divider-top-1689271681">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
@@ -171,5 +194,22 @@ function Or(props){
   </div>
   )
 }
+
+function Lost(props){
+  if (props.isLost){
+    return (
+      <div className="lost">
+        You lost !
+        <button type="button" onClick={props.newGame}>Play Again</button>
+      </div>
+    )
+  }
+  else{
+    return(null) 
+  }
+
+}
+
+
 
 export default App;

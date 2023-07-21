@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap');
 
-.App {
+.App, .toHide {
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -8,6 +8,13 @@
   align-items: center;
   background-color: coral;
 }
+
+.toHide{
+  visibility: visible;
+  opacity: 100;
+  transition: 1s;
+}
+
 
 .divOr {
   display: flex;
@@ -73,3 +80,18 @@
   background-color: blueviolet;
 }
 
+.loading{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.lost{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  background-color: blue;
+}
