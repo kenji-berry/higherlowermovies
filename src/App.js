@@ -14,18 +14,75 @@ function App() {
 
 
 
-  const compare = (whichPanel,movieDataFromPanel,updatePanelFunc)=>{
+  const compare = (whichPanel,movieDataFromPanel)=>{
+    function getData(){
+      const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=most_pop_movies';
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
+          'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
+        }
+      };
+
+      fetch(url, options)
+      .then(response =>  response.json())
+      .then(data=> data.results[0])
+      .then(data =>{
+        
+          const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
+          fetch(ratingUrl,options)
+          .then(response => response.json())
+          .then(rating=>{
+            rating = rating.results
+            console.log(data)
+            console.log(rating)
+            setTimeout(() => {setRandomMovie(whichPanel,data,rating)},3000)
+          })
+      })
+    }
+
+    const resetPanel = (whichPanel) =>{     
+      let panels = document.getElementsByClassName("panel")
+      panels = Array.prototype.slice.call(panels)
+      const changePanel = (element) =>{
+        element.style.borderColor="#FFFFFF"
+        element.style.transform="scale(1)"
+      }
+      let ratingPanel = document.getElementsByClassName("rating")
+      ratingPanel = Array.prototype.slice.call(ratingPanel)
+      ratingPanel = ratingPanel[parseInt(whichPanel)-1]
+      ratingPanel.style.display="none"
+      ratingPanel.style.opacity="0"
+
+      panels.forEach(changePanel)
+    
+    }
+    const setRandomMovie = (whichPanel,data,rating) =>{
+      if (whichPanel == "1"){
+        resetPanel(whichPanel)
+        setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[2]]) 
+      }
+      else{
+        resetPanel(whichPanel)
+        setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
+      }
+    }
+
+
+
     const removePanels = () =>{
       const a =document.getElementsByClassName("toHide")[0]
       a.style.display="none"
       setLost(true)
     }
 
-    const test = () =>{
+    const showRating = () =>{
       let count=0
       let ratingsShow = document.getElementsByClassName("rating")
       ratingsShow  = Array.prototype.slice.call(ratingsShow)
       const changePanel = (element,panelNum) =>{
+        element.style.display="block"
         element.style.opacity="100"
         let startValue=1;
         let endValue=movie[movieDataFromPanel[panelNum]].rating;
@@ -49,6 +106,8 @@ function App() {
     }
 
 
+
+
     const changePanel = (colour) =>{        
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
@@ -66,38 +125,15 @@ function App() {
         console.log("higher1")
         setScore(score+1)
         changePanel("#34b233")
-        test()
-        const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
-        const options = {
-          method: 'GET',
-          headers: {
-            'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
-            'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
-          }
-        };
-
-        fetch(url, options)
-        .then(response =>  response.json())
-        .then(data=> data.results[0])
-        .then(data =>{
-          
-            const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
-            fetch(ratingUrl,options)
-            .then(response => response.json())
-            .then(rating=>{
-              rating = rating.results
-              console.log(data)
-              console.log(rating)
-              setTimeout(() => {setRandomMovie(whichPanel,data,rating)},3000)
-            })
-        })
-        
+        showRating()
+        getData()
         
       }
       else{
         console.log("lower1")
         changePanel("#ff2a26")
-        test()
+        showRating()
+        
         setTimeout(() => {removePanels()},3000)
       }
     }
@@ -105,65 +141,25 @@ function App() {
       if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
         console.log("higher1")
         setScore(score+1)
-        test()
-        function getRandomMovies() {
-          return new Promise(resolve => resolve("hlloe"))
-        }
-        async function asyncCall(){
-          console.log("calling")
-          const result = await getRandomMovies();
-          console.log(result);
-        }
-        asyncCall();
+        showRating()
+        getData()
+        
         changePanel("#34b233")
       }
       else{
         console.log("lower2")
         const a =document.getElementsByClassName("toHide")[0]
         changePanel("#ff2a26")
-        test()
+        showRating()
+        
         setTimeout(() => {removePanels()},3000)
 
       }
     }
 
     }
-  
 
-  function getRandomMovie(){
 
-    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
-        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
-      }
-    };
-
-    fetch(url, options)
-    .then(response =>  response.json())
-    .then(data=> data.results[0])
-    .then(data =>{
-      
-        const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
-        fetch(ratingUrl,options)
-        .then(response => response.json())
-        .then(rating=>{
-            return new Promise(resolve => resolve("hlloe"))
-        })
-    })
-  }
-
-  const setRandomMovie = (whichPanel,data,rating) =>{
-    if (whichPanel == "1"){
-
-      setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[2]]) 
-    }
-    else{
-      setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
-    }
-  }
 
 
   function RandomMovie(image,name,year,rating,numVotes) {
@@ -232,26 +228,10 @@ function App() {
         {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
         
         <div className="toHide">
-          <Panel onClick={[compare, getRandomMovie,test,setRandomMovie]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
+          <Panel onClick={[compare, ,test]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
           <Or score={score}></Or>
-          <Panel onClick={[compare,getRandomMovie, test,setRandomMovie]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
+          <Panel onClick={[compare,,test]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
         </div>
-
-
-          <div class="custom-shape-divider-top-1689271681">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
-        </svg>
-      </div>
-      <div class="custom-shape-divider-bottom-1689271754">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
-        </svg>
-      </div>
       </div>
     );
   }

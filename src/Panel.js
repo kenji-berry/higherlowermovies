@@ -18,7 +18,6 @@ function Panel(props){
             <div id="panel-text">
               <div>{movie.name} ({movie.year})</div>
               <div id="rating" className='rating'>{movie.rating}</div>
-              <div>{movie.numVotes}</div>
             </div>  
         </div>
 

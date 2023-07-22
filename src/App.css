@@ -6,7 +6,8 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(166,166,166,1) 37%, rgba(147,147,147,1) 79%, rgba(255,255,255,1) 100%);
+  background-color: deepskyblue;
+  height: 100vh;
 }
 
 .toHide{
@@ -33,55 +34,12 @@
   padding: 0.5rem;
 }
 
-.custom-shape-divider-top-1689271681 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-
-.custom-shape-divider-top-1689271681 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 69px;
-  transform: rotateY(180deg);
-}
-
-.custom-shape-divider-top-1689271681 .shape-fill {
-  fill: #924DCF;
-}
-
-.custom-shape-divider-bottom-1689271754 {
-  z-index: -0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1689271754 svg {
-  position: relative;
-  display: block;
-  width: calc(113% + 1.3px);
-  height: 69px;
-  }
-
-.custom-shape-divider-bottom-1689271754 .shape-fill {
-  fill: #924DCF;
-}
-
 .scoresMiddle{
   font-family: 'Poppins', sans-serif;
   font-weight:700;
   font-size: 1rem;
   background-color: blueviolet;
-  height: 100vh;
+  height: 40vh;
   display: flex;
   align-items: center;
   justify-content: center;
