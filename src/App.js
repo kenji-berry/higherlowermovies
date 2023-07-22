@@ -42,7 +42,8 @@ function App() {
       })
     }
 
-    const resetPanel = (whichPanel) =>{     
+    const resetPanel = (whichPanel) =>{    
+      document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
@@ -56,7 +57,7 @@ function App() {
       ratingPanel.style.opacity="0"
 
       panels.forEach(changePanel)
-    
+
     }
     const setRandomMovie = (whichPanel,data,rating) =>{
       if (whichPanel == "1"){
@@ -109,6 +110,7 @@ function App() {
 
 
     const changePanel = (colour) =>{        
+      document.getElementById("outerApp").style.backgroundColor = colour
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
@@ -172,6 +174,7 @@ function App() {
 
 
   const setUpGame = () => {
+    document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
     setLost(false)
     setScore(0)
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
@@ -224,7 +227,7 @@ function App() {
 
   else{
     return (
-      <div className="App">
+      <div className="App" id="outerApp">
         {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
         
         <div className="toHide">
