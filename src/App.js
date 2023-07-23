@@ -82,7 +82,6 @@ function App() {
     panels = Array.prototype.slice.call(panels)
     const changePanel = (element) =>{
       element.style.borderColor="#708090"
-      element.style.transform="scale(1)"
     }
     let ratingPanel = document.getElementsByClassName("rating")
     ratingPanel = Array.prototype.slice.call(ratingPanel)
@@ -133,7 +132,6 @@ function App() {
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
         element.style.borderColor=colour
-        element.style.transform="scale(0.8)"
       }
       panels.forEach(changePanel)
     }
@@ -179,7 +177,6 @@ function App() {
   if(isLoading === true) {
     return (      
       <div className="loading">
-        <h1>Loading...</h1>
         <PropagateLoader color="#36d7b7" />
       </div>
     )
@@ -213,17 +210,16 @@ function Or(props){
   }
   newHighScore(props.score)
   return (
-    <div>
-    <div className="divOr">
-      <div className="scoresMiddle">
-        <p>HIGHSCORE: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
-        <p>SCORE: {props.score}</p>
-        <h2 className="Or">OR</h2>
+    <div className="p-2">
+      <div className="flex flex-col w-1/10">
+        <div className="p-4 bg-zinc-400 rounded-lg shadow-md font-semibold shadow-zinc-950 border-solid border-2 border-zinc-500">
+          <p>HIGHSCORE: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
+          <p>SCORE: {props.score}</p>
+        </div>
       </div>
-
+      <h2 className=" mt-2 p-2.5 bg-orange-400 rounded-lg shadow-lg shadow-orange-500/50 font-black w-1/10 border-solid border-2 border-orange-500">OR</h2>
     </div>
 
-  </div>
   )
 }
 

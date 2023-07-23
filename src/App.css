@@ -9,6 +9,7 @@
   transition: 1s;
   height: 100vh;
 }
+
 .app{
   background-color: deepskyblue;
 }
@@ -16,37 +17,6 @@
 .toHide{
   visibility: visible;
   opacity: 100;
-}
-
-
-.divOr {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0.5rem;
-
-
-}
-
-.Or {
-  z-index: 10;
-  background-color: aquamarine;
-  padding: 1rem;
-  border-radius: 3rem;
-  padding: 0.5rem;
-}
-
-.scoresMiddle{
-  font-family: 'Poppins', sans-serif;
-  font-weight:700;
-  font-size: 1rem;
-  background-color: blueviolet;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .loading{
