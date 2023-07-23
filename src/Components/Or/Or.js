@@ -1,7 +1,9 @@
 function Or(props){
+    // function to set high score
     const newHighScore = (score) =>{
       if (score>localStorage.getItem("HighScore")){
         localStorage.setItem("HighScore",score)
+
       }
     }
     newHighScore(props.score)

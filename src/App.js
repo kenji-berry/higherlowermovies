@@ -8,6 +8,7 @@ import PropagateLoader from "react-spinners/PropagateLoader";
 
 
 function App() {
+  //all state variables
   let [movie1,setMovie1] = useState({})
   let [movie2,setMovie2] = useState({})
   const [isLoading,setisLoading] = useState(false)
@@ -17,6 +18,7 @@ function App() {
   const [start,setStart] = useState(false)
   const [list,setList] = useState("")
 
+  // function to call all other relevant functions and set states to start the game
   function setUpGame(list){
     setList(list)
     document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
@@ -27,11 +29,13 @@ function App() {
     getData("2", true,0, list)
   }
 
+  // function which uses fetch api to retrieve data from API
   function getData(whichPanel, ready, delay, list){
     const url = `https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=${list}`;
     const options = {
       method: 'GET',
       headers: {
+        // get your own FREE API key at https://rapidapi.com/SAdrian/api/moviesdatabase
         'X-RapidAPI-Key': `3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59`,
         'X-RapidAPI-Host': `moviesdatabase.p.rapidapi.com`,
       }
@@ -59,6 +63,7 @@ function App() {
     })
   }
   
+  // function which updates the state variables with their relevant movies
   const setRandomMovie = (whichPanel,data,rating, ready) =>{
     if (whichPanel === "1"){
       setMovie1(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))
@@ -72,6 +77,7 @@ function App() {
     }
   }
 
+  // function which resets all of the styling applied when an answer is correct
   const resetPanel = (whichPanel) =>{    
     document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
     let panels = document.getElementsByClassName("panel")
@@ -88,13 +94,16 @@ function App() {
     panels.forEach(resetChangePanel)
   }
 
-  const compare = (whichPanel,movieDataFromPanel)=>{
+  //compares the two numbers, and does all things encapsulated within 
+  const compare = (whichPanel)=>{
+    // removes the panels from user 
     const removePanels = () =>{
       const a =document.getElementsByClassName("toHide")[0]
       a.style.display="none"
       setLost(true)
     }
 
+    // animates the ratings showing up
     const showRating = () =>{
       let ratingsShow = document.getElementsByClassName("rating")
       ratingsShow  = Array.prototype.slice.call(ratingsShow)
@@ -123,6 +132,7 @@ function App() {
       }
     }
 
+    // changes the colour/ does all the effects when an answer is right/wrong
     const changePanel = (colour, coloursecond) =>{        
       document.getElementById("outerApp").style.backgroundColor = coloursecond
       let panels = document.getElementsByClassName("panel")
@@ -164,6 +174,7 @@ function App() {
     }
     }
 
+  // constructor function for a movie
   function RandomMovie(image,name,year,rating,numVotes) {
     this.image = image;
     this.name = name;
@@ -172,6 +183,7 @@ function App() {
     this.numVotes = numVotes;
   }
 
+  // loading screen
   if(isLoading === true) {
     return (      
       <div className="loading">
