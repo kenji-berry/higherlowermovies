@@ -83,7 +83,6 @@ function App() {
     let panels = document.getElementsByClassName("panel")
     panels = Array.prototype.slice.call(panels)
     const resetChangePanel = (element) =>{
-      element.style.transition="1s"
       element.style.borderColor="#708090"
     }
     let ratingPanel = document.getElementsByClassName("rating")
@@ -138,7 +137,6 @@ function App() {
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
-        element.style.transition="0.5s"
         element.style.borderColor=colour
       }
       panels.forEach(changePanel)
