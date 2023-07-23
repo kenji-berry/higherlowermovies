@@ -22,7 +22,8 @@ function App() {
   }
 
   function getData(whichPanel, ready, delay){
-    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
+    console.log(arguments)
+    const url = `https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=most_pop_movies`;
     const options = {
       method: 'GET',
       headers: {
@@ -126,11 +127,13 @@ function App() {
     }
 
     if (whichPanel === "1"){
+
       if (movie1.rating >= movie2.rating){
         console.log("higher1")
         setScore(score+1)
         changePanel("#34b233")
         showRating(whichPanel)
+
         getData("1",true,1500)
         setTimeout(() => {resetPanel(whichPanel)},3000)
 
@@ -145,9 +148,11 @@ function App() {
       }
     }
     else{
+
       if (movie2.rating >= movie1.rating){
         console.log("higher1")
         setScore(score+1)
+        
         showRating(whichPanel)
         getData("2",true,1500)
         changePanel("#34b233")
@@ -185,7 +190,7 @@ function App() {
     return (
       <div className="App" id="outerApp">
         {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
-        {!start ? <button onClick={setUpGame}>bbbbbbbbbbbb</button>:null}
+        {!start ? <StartGame newGame={setUpGame}></StartGame>:null}
         {start ?         <div className="toHide">
           <Panel onClick={[compare]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie1}></Panel>
           <Or score={score}></Or>
@@ -241,8 +246,8 @@ function StartGame(props){
   return (
     <div className="lost" id="hideLost">
       <div className="inner">
-      You lost !
-      <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
+      <h1>Which movie has a higher rating game</h1>
+      <button type="button" onClick={props.newGame} id="playAgainButton">Start Game</button>
       </div>
 
     </div>
