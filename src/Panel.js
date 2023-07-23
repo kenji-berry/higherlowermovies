@@ -1,6 +1,4 @@
 import './Panel.css';
-import React, { useEffect, useState } from "react"
-
 
 function Panel(props){
     let movie = props.movie

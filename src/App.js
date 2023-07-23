@@ -1,5 +1,5 @@
 import "./App.css"
-import React, { useEffect, useState } from "react"
+import React, {useState} from "react"
 import Panel from "./Panel.js"
 import PropagateLoader from "react-spinners/PropagateLoader";
 
@@ -12,7 +12,6 @@ function App() {
   const[lost,setLost] = useState(false)
   const [start,setStart] = useState(false)
   const [list,setList] = useState("")
-  const [error,setError] = useState("")
 
   function setUpGame(list){
     setList(list)
@@ -50,12 +49,12 @@ function App() {
           setTimeout(() => {setRandomMovie(whichPanel,data,rating, ready)},delay)
         })
         .catch(error =>{
-          setError("Could not fetch data for movie")
+          console.log(error)
           setStart(false)
         })
     })
     .catch(error =>{
-      setError("Could not fetch data for movie")
+      console.log(error)
       setStart(false)
     })
   }
@@ -63,11 +62,11 @@ function App() {
 
   const setRandomMovie = (whichPanel,data,rating, ready) =>{
 
-    if (whichPanel == "1"){
+    if (whichPanel === "1"){
       setMovie1(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))
     }
 
-    else if (whichPanel =="2"){
+    else if (whichPanel === "2"){
       setMovie2(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))      
     }
 
@@ -141,43 +140,30 @@ function App() {
 
     if (whichPanel === "1"){
       if (movie1.rating >= movie2.rating){
-        console.log("higher1")
         setScore(score+1)
-        changePanel("#66cd00","#5bb800")
         showRating(whichPanel)
-
         getData("1",true,1500,list)
+        changePanel("#66cd00","#5bb800")
         setTimeout(() => {resetPanel(whichPanel)},3000)
-
-        
       }
       else{
-        console.log("lower1")
         changePanel("#990000","#b20000")
         showRating(whichPanel)
-        
         setTimeout(() => {removePanels()},3000)
       }
     }
     else{
       if (movie2.rating >= movie1.rating){
-        console.log("higher1")
         setScore(score+1)
-        
         showRating(whichPanel)
         getData("2",true,1500, list)
         changePanel("#66cd00","#5bb800")
         setTimeout(() => {resetPanel(whichPanel)},3000)
       }
       else{
-        console.log("lower2")
-        const a =document.getElementsByClassName("toHide")[0]
         changePanel("#990000","#b20000")
-
         showRating(whichPanel)
-        
         setTimeout(() => {removePanels()},3000)
-
       }
     }
     }
