@@ -10,7 +10,6 @@
     width: 40vw;
     height: 98vh;
     transform: scale(1);
-    background-image: url("Image-Not-Available.png");
     background-color: black;
     border-width:0.5vh;
     border-style: solid;
@@ -25,13 +24,9 @@
     display: none;
 }
 
-
-
 .panel:hover{
-
     filter: brightness(50%);
 }
-
 
 #panel-text{
     background-color: #EFEFEF;
@@ -41,8 +36,6 @@
     padding-left: 1rem;
     font-family: "Oxygen";
     font-size: 1.5rem;
-
-    
 }
 
 #movie-name{

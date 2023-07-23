@@ -1,6 +1,8 @@
 import "./App.css"
 import React, {useState} from "react"
-import Panel from "./Panel.js"
+import Panel from "./Components/Panel/Panel.js"
+import Or from "./Components/Or/Or.js"
+import StartGame from "./Components/StartGame/StartGame.js";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
 function App() {
@@ -24,7 +26,6 @@ function App() {
   }
 
   function getData(whichPanel, ready, delay, list){
-    console.log(arguments)
     const url = `https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=${list}`;
     const options = {
       method: 'GET',
@@ -38,14 +39,11 @@ function App() {
     .then(response =>  response.json())
     .then(data=> data.results[0])
     .then(data =>{
-      
         const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
         fetch(ratingUrl,options)
         .then(response => response.json())
         .then(rating=>{
           rating = rating.results
-          console.log(data)
-          console.log(rating)
           setTimeout(() => {setRandomMovie(whichPanel,data,rating, ready)},delay)
         })
         .catch(error =>{
@@ -59,17 +57,13 @@ function App() {
     })
   }
   
-
   const setRandomMovie = (whichPanel,data,rating, ready) =>{
-
     if (whichPanel === "1"){
       setMovie1(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))
     }
-
     else if (whichPanel === "2"){
       setMovie2(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))      
     }
-
     if (ready){
       setStart(true)
       setisLoading(false)
@@ -177,7 +171,7 @@ function App() {
   if(isLoading === true) {
     return (      
       <div className="loading">
-        <PropagateLoader color="#36d7b7" />
+        <PropagateLoader color="#ffa500" />
       </div>
     )
   }
@@ -200,104 +194,5 @@ function App() {
 
   
 }
-
-
-function Or(props){
-  const newHighScore = (score) =>{
-    if (score>localStorage.getItem("HighScore")){
-      localStorage.setItem("HighScore",score)
-    }
-  }
-  newHighScore(props.score)
-  return (
-    <div className="p-2">
-      <div className="flex flex-col w-1/10">
-        <div className="p-4 bg-zinc-400 rounded-lg shadow-md font-semibold shadow-zinc-950 border-solid border-2 border-zinc-500">
-          <p>HIGHSCORE: {localStorage.getItem("HighScore") ? localStorage.getItem("HighScore") : 0}</p>
-          <p>SCORE: {props.score}</p>
-        </div>
-      </div>
-      <h2 className=" mt-2 p-2.5 bg-orange-400 rounded-lg shadow-lg shadow-orange-500/50 font-black w-1/10 border-solid border-2 border-orange-500">OR</h2>
-    </div>
-
-  )
-}
-
-
-function StartGame(props){
-  function getSelectedList(){
-    const selectedList = document.getElementById("listSelect").value
-    return selectedList
-  }
-
-  return (
-    <div className="lost" id="hideLost">
-      <div className="backgroundAnimation">
-        <span style={{"--time": 27}} className="toAnimate colour1"></span>
-        <span style={{"--time": 38}} className="toAnimate colour2"></span>
-        <span style={{"--time": 19}} className="toAnimate colour1"></span>
-        <span style={{"--time": 23}} className="toAnimate colour2"></span>
-        <span style={{"--time": 26}} className="toAnimate colour1"></span>
-        <span style={{"--time": 15}} className="toAnimate colour2"></span>
-        <span style={{"--time": 17}} className="toAnimate colour1"></span>
-        <span style={{"--time": 35}} className="toAnimate colour2"></span>
-        <span style={{"--time": 38}} className="toAnimate colour1"></span>
-        <span style={{"--time": 40}} className="toAnimate colour2"></span>
-        <span style={{"--time": 42}} className="toAnimate colour1"></span>
-        <span style={{"--time": 15}} className="toAnimate colour2"></span>
-        <span style={{"--time": 23}} className="toAnimate colour1"></span>
-        <span style={{"--time": 43}} className="toAnimate colour2"></span>
-        <span style={{"--time": 22}} className="toAnimate colour1"></span>
-        <span style={{"--time": 35}} className="toAnimate colour2"></span>
-        <span style={{"--time": 14}} className="toAnimate colour1"></span>
-        <span style={{"--time": 33}} className="toAnimate colour2"></span>
-        <span style={{"--time": 10}} className="toAnimate colour1"></span>
-        <span style={{"--time": 28}} className="toAnimate colour2"></span>
-        <span style={{"--time": 43}} className="toAnimate colour1"></span>
-        <span style={{"--time": 30}} className="toAnimate colour2"></span>
-        <span style={{"--time": 21}} className="toAnimate colour1"></span>
-        <span style={{"--time": 40}} className="toAnimate colour2"></span>
-        <span style={{"--time": 25}} className="toAnimate colour1"></span>
-        <span style={{"--time": 32}} className="toAnimate colour2"></span>
-        <span style={{"--time": 11}} className="toAnimate colour1"></span>
-        <span style={{"--time": 25}} className="toAnimate colour2"></span>
-        <span style={{"--time": 34}} className="toAnimate colour1"></span>
-        <span style={{"--time": 27}} className="toAnimate colour2"></span>
-        <span style={{"--time": 22}} className="toAnimate colour1"></span>
-        <span style={{"--time": 35}} className="toAnimate colour2"></span>
-        <span style={{"--time": 23}} className="toAnimate colour1"></span>
-        <span style={{"--time": 43}} className="toAnimate colour2"></span>
-        <span style={{"--time": 12}} className="toAnimate colour1"></span>
-        <span style={{"--time": 42}} className="toAnimate colour2"></span>
-        <span style={{"--time": 12}} className="toAnimate colour1"></span>
-        <span style={{"--time": 5}} className="toAnimate colour2"></span>
-        <span style={{"--time": 41}} className="toAnimate colour1"></span>
-        <span style={{"--time": 16}} className="toAnimate colour2"></span>
-        <span style={{"--time": 34}} className="toAnimate colour1"></span>
-      </div>
-
-      <div className="flex flex-col  p-6 rounded-xl shadow-2xl fixed backdrop-blur-sm">
-        {props.lost ? <h3 className="text-4xl font-extrabold ">You Lost !</h3>: null}
-        <h1 className="text-4xl pt-4 pb-2 font-bold">Which movie has a higher rating game</h1>
-        <p>Developed by <a href="https://github.com/kenji-berry" className="font-medium text-orange-400 hover:underline">Kenji</a></p>
-        <div className="pb-4 pt-2">
-          <h3 className="font-semibold text-xl">How to play</h3>
-          <p className="text-xl">Two random movies will appear, select the movie you think has a higher rating according to IMDb.</p>
-        </div>
-
-        <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton" className="bg-zinc-950 text-white p-4 hover:bg-zinc-400">{props.lost ? "Go Again":"Start Game"}</button>
-          <select name="listSelect" id="listSelect" className="p-4">
-            <option value="top_rated_english_250">Top 250 English Movies (Default) </option>
-            <option value="top_rated_250">Top 250 Movies </option>
-            <option value="top_boxoffice_200">Top 200 All Time Box Office Movies</option>
-          </select>
-      </div>
-
-    </div>
-  )
-  
-
-}
-
 
 export default App;
