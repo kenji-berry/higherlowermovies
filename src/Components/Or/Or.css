@@ -1,0 +1,11 @@
+@media only screen and (max-width: 768px) {
+    #outerOr{
+        padding:10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #outerOr h2{
+        display: none;
+    }
+}
