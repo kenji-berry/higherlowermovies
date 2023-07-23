@@ -1,4 +1,5 @@
 import "./App.css"
+import {Helmet} from "react-helmet";
 import React, {useState} from "react"
 import Panel from "./Components/Panel/Panel.js"
 import Or from "./Components/Or/Or.js"
@@ -35,7 +36,7 @@ function App() {
         'X-RapidAPI-Host': `${process.env.REACT_APP_RAPID_API_HOST}`,
       }
     };
-    
+
     fetch(url, options)
     .then(response =>  response.json())
     .then(data=> data.results[0])
@@ -182,7 +183,11 @@ function App() {
   else{
     return (
       <div className="App" id="outerApp">
+        <Helmet>
+          <meta charSet="utf-8"/>
+          <title>Higher Or Lower Movies</title>
 
+        </Helmet>
         {lost ? <StartGame newGame={setUpGame} lost={lost}></StartGame> : null}
         {!start ? <StartGame newGame={setUpGame} lost={lost}></StartGame>:null}
         {start ?         <div className="toHide">
