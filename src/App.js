@@ -237,55 +237,56 @@ function StartGame(props){
   return (
     <div className="lost" id="hideLost">
       <div className="backgroundAnimation">
-        <span style={{"--time": 25}} className="toAnimate colour1"></span>
-        <span style={{"--time": 25}} className="toAnimate colour2"></span>
-        <span style={{"--time": 20}} className="toAnimate colour1"></span>
-        <span style={{"--time": 4}} className="toAnimate colour2"></span>
-        <span style={{"--time": 31}} className="toAnimate colour1"></span>
-        <span style={{"--time": 8}} className="toAnimate colour2"></span>
-        <span style={{"--time": 9}} className="toAnimate colour1"></span>
-        <span style={{"--time": 10}} className="toAnimate colour2"></span>
-        <span style={{"--time": 11}} className="toAnimate colour1"></span>
-        <span style={{"--time": 12}} className="toAnimate colour2"></span>
-        <span style={{"--time": 33}} className="toAnimate colour1"></span>
-        <span style={{"--time": 1}} className="toAnimate colour2"></span>
-        <span style={{"--time": 13}} className="toAnimate colour1"></span>
-        <span style={{"--time": 14}} className="toAnimate colour2"></span>
-        <span style={{"--time": 34}} className="toAnimate colour1"></span>
-        <span style={{"--time": 16}} className="toAnimate colour2"></span>
-        <span style={{"--time": 17}} className="toAnimate colour1"></span>
-        <span style={{"--time": 27}} className="toAnimate colour2"></span>
+        <span style={{"--time": 27}} className="toAnimate colour1"></span>
+        <span style={{"--time": 38}} className="toAnimate colour2"></span>
         <span style={{"--time": 19}} className="toAnimate colour1"></span>
-        <span style={{"--time": 21}} className="toAnimate colour2"></span>
-        <span style={{"--time": 3}} className="toAnimate colour1"></span>
-        <span style={{"--time": 22}} className="toAnimate colour2"></span>
-        <span style={{"--time": 23}} className="toAnimate colour1"></span>
-        <span style={{"--time": 24}} className="toAnimate colour2"></span>
-        <span style={{"--time": 5}} className="toAnimate colour1"></span>
-        <span style={{"--time": 13}} className="toAnimate colour2"></span>
+        <span style={{"--time": 23}} className="toAnimate colour2"></span>
+        <span style={{"--time": 26}} className="toAnimate colour1"></span>
+        <span style={{"--time": 15}} className="toAnimate colour2"></span>
+        <span style={{"--time": 17}} className="toAnimate colour1"></span>
+        <span style={{"--time": 35}} className="toAnimate colour2"></span>
+        <span style={{"--time": 38}} className="toAnimate colour1"></span>
+        <span style={{"--time": 40}} className="toAnimate colour2"></span>
         <span style={{"--time": 42}} className="toAnimate colour1"></span>
         <span style={{"--time": 15}} className="toAnimate colour2"></span>
-        <span style={{"--time": 25}} className="toAnimate colour1"></span>
-        <span style={{"--time": 7}} className="toAnimate colour2"></span>
-        <span style={{"--time": 30}} className="toAnimate colour1"></span>
-        <span style={{"--time": 19}} className="toAnimate colour2"></span>
-        <span style={{"--time": 6}} className="toAnimate colour1"></span>
+        <span style={{"--time": 23}} className="toAnimate colour1"></span>
+        <span style={{"--time": 43}} className="toAnimate colour2"></span>
+        <span style={{"--time": 22}} className="toAnimate colour1"></span>
         <span style={{"--time": 35}} className="toAnimate colour2"></span>
-        <span style={{"--time": 18}} className="toAnimate colour1"></span>
+        <span style={{"--time": 14}} className="toAnimate colour1"></span>
+        <span style={{"--time": 33}} className="toAnimate colour2"></span>
+        <span style={{"--time": 10}} className="toAnimate colour1"></span>
+        <span style={{"--time": 28}} className="toAnimate colour2"></span>
+        <span style={{"--time": 43}} className="toAnimate colour1"></span>
+        <span style={{"--time": 30}} className="toAnimate colour2"></span>
+        <span style={{"--time": 21}} className="toAnimate colour1"></span>
+        <span style={{"--time": 40}} className="toAnimate colour2"></span>
+        <span style={{"--time": 25}} className="toAnimate colour1"></span>
+        <span style={{"--time": 32}} className="toAnimate colour2"></span>
+        <span style={{"--time": 11}} className="toAnimate colour1"></span>
         <span style={{"--time": 25}} className="toAnimate colour2"></span>
-        <span style={{"--time": 2}} className="toAnimate colour1"></span>
-        <span style={{"--time": 20}} className="toAnimate colour2"></span>
-        <span style={{"--time": 4}} className="toAnimate colour1"></span>
-        <span style={{"--time": 31}} className="toAnimate colour2"></span>
-        <span style={{"--time": 8}} className="toAnimate colour1"></span>
+        <span style={{"--time": 34}} className="toAnimate colour1"></span>
+        <span style={{"--time": 27}} className="toAnimate colour2"></span>
+        <span style={{"--time": 22}} className="toAnimate colour1"></span>
+        <span style={{"--time": 35}} className="toAnimate colour2"></span>
+        <span style={{"--time": 23}} className="toAnimate colour1"></span>
+        <span style={{"--time": 43}} className="toAnimate colour2"></span>
+        <span style={{"--time": 12}} className="toAnimate colour1"></span>
+        <span style={{"--time": 42}} className="toAnimate colour2"></span>
+        <span style={{"--time": 12}} className="toAnimate colour1"></span>
+        <span style={{"--time": 5}} className="toAnimate colour2"></span>
+        <span style={{"--time": 41}} className="toAnimate colour1"></span>
+        <span style={{"--time": 16}} className="toAnimate colour2"></span>
+        <span style={{"--time": 34}} className="toAnimate colour1"></span>
       </div>
 
-      <div className="flex flex-col  p-6 rounded-xl shadow-lg fixed backdrop-blur-sm">
-        {props.lost ? <h3>You Lost !</h3>: null}
-        <h1 className="text-4xl p-4">Which movie has a higher rating game</h1>
-        <div className="pb-4 pt-4">
-          <h3>How to play</h3>
-          <p>Two random movies will appear, select the movie you think has a higher rating according to imdb.</p>
+      <div className="flex flex-col  p-6 rounded-xl shadow-2xl fixed backdrop-blur-sm">
+        {props.lost ? <h3 className="text-4xl font-extrabold ">You Lost !</h3>: null}
+        <h1 className="text-4xl pt-4 pb-2 font-bold">Which movie has a higher rating game</h1>
+        <p>Developed by <a href="https://github.com/kenji-berry" className="font-medium text-orange-400 hover:underline">Kenji</a></p>
+        <div className="pb-4 pt-2">
+          <h3 className="font-semibold text-xl">How to play</h3>
+          <p className="text-xl">Two random movies will appear, select the movie you think has a higher rating according to IMDb.</p>
         </div>
 
         <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton" className="bg-zinc-950 text-white p-4 hover:bg-zinc-400">{props.lost ? "Go Again":"Start Game"}</button>
