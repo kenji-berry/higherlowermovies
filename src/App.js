@@ -4,74 +4,87 @@ import Panel from "./Panel.js"
 import PropagateLoader from "react-spinners/PropagateLoader";
 
 function App() {
-  let [movie,setMovie] = useState([{}])
-  const [isLoading,setisLoading] = useState(true)
+  let [movie1,setMovie1] = useState({})
+  let [movie2,setMovie2] = useState({})
+  const [isLoading,setisLoading] = useState(false)
   let [panelNum,setPanelNum] = useState([1,2])
   const [score,setScore] = useState(0)
   const[lost,setLost] = useState(false)
+  const [start,setStart] = useState(false)
+
+  function setUpGame(){
+    document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
+    setisLoading(true)
+    setLost(false)
+    setScore(0)
+    getData("1", false)
+    getData("2", true)
+
+  }
 
 
 
+  function getData(whichPanel, ready){
+    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
+    const options = {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
+        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
+      }
+    };
 
+    fetch(url, options)
+    .then(response =>  response.json())
+    .then(data=> data.results[0])
+    .then(data =>{
+      
+        const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
+        fetch(ratingUrl,options)
+        .then(response => response.json())
+        .then(rating=>{
+          rating = rating.results
+          console.log(data)
+          console.log(rating)
+          setRandomMovie(whichPanel,data,rating, ready)
+        })
+    })
+  }
+
+  const setRandomMovie = (whichPanel,data,rating, ready) =>{
+    if (whichPanel == "1"){
+      setMovie1(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))
+    }
+
+    else if (whichPanel =="2"){
+      setMovie2(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))      
+    }
+
+    if (ready){
+      setStart(true)
+      setisLoading(false)
+    }
+  }
+
+  const resetPanel = (whichPanel) =>{    
+    document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
+    let panels = document.getElementsByClassName("panel")
+    panels = Array.prototype.slice.call(panels)
+    const changePanel = (element) =>{
+      element.style.borderColor="#FFFFFF"
+      element.style.transform="scale(1)"
+    }
+    let ratingPanel = document.getElementsByClassName("rating")
+    ratingPanel = Array.prototype.slice.call(ratingPanel)
+    ratingPanel = ratingPanel[parseInt(whichPanel)-1]
+    ratingPanel.style.display="none"
+    ratingPanel.style.opacity="0"
+
+    panels.forEach(changePanel)
+
+  }
 
   const compare = (whichPanel,movieDataFromPanel)=>{
-    function getData(){
-      const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=most_pop_movies';
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
-          'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
-        }
-      };
-
-      fetch(url, options)
-      .then(response =>  response.json())
-      .then(data=> data.results[0])
-      .then(data =>{
-        
-          const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
-          fetch(ratingUrl,options)
-          .then(response => response.json())
-          .then(rating=>{
-            rating = rating.results
-            console.log(data)
-            console.log(rating)
-            setTimeout(() => {setRandomMovie(whichPanel,data,rating)},3000)
-          })
-      })
-    }
-
-    const resetPanel = (whichPanel) =>{    
-      document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
-      let panels = document.getElementsByClassName("panel")
-      panels = Array.prototype.slice.call(panels)
-      const changePanel = (element) =>{
-        element.style.borderColor="#FFFFFF"
-        element.style.transform="scale(1)"
-      }
-      let ratingPanel = document.getElementsByClassName("rating")
-      ratingPanel = Array.prototype.slice.call(ratingPanel)
-      ratingPanel = ratingPanel[parseInt(whichPanel)-1]
-      ratingPanel.style.display="none"
-      ratingPanel.style.opacity="0"
-
-      panels.forEach(changePanel)
-
-    }
-    const setRandomMovie = (whichPanel,data,rating) =>{
-      if (whichPanel == "1"){
-        resetPanel(whichPanel)
-        setMovie([movie[0], new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes), movie[2]]) 
-      }
-      else{
-        resetPanel(whichPanel)
-        setMovie([movie[0],movie[1],new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)])               
-      }
-    }
-
-
-
     const removePanels = () =>{
       const a =document.getElementsByClassName("toHide")[0]
       a.style.display="none"
@@ -79,6 +92,8 @@ function App() {
     }
 
     const showRating = () =>{
+
+      console.log(movie1)
       let count=0
       let ratingsShow = document.getElementsByClassName("rating")
       ratingsShow  = Array.prototype.slice.call(ratingsShow)
@@ -86,7 +101,14 @@ function App() {
         element.style.display="block"
         element.style.opacity="100"
         let startValue=1;
-        let endValue=movie[movieDataFromPanel[panelNum]].rating;
+        let endValue =movie1.rating;
+
+        if (whichPanel === "2"){
+          endValue = movie2.rating;
+        }
+
+  
+
         console.log(endValue)
         let duration = 30
         let counter = setInterval(function(){
@@ -123,28 +145,28 @@ function App() {
     console.log(whichPanel)
 
     if (whichPanel === "1"){
-      if (movie[movieDataFromPanel[0]].rating >= movie[movieDataFromPanel[1]].rating){
+      if (movie1.rating >= movie2.rating){
         console.log("higher1")
         setScore(score+1)
         changePanel("#34b233")
-        showRating()
-        getData()
+        showRating(whichPanel)
+        getData("1")
         
       }
       else{
         console.log("lower1")
         changePanel("#ff2a26")
-        showRating()
+        showRating(whichPanel)
         
         setTimeout(() => {removePanels()},3000)
       }
     }
     else{
-      if (movie[movieDataFromPanel[1]].rating >= movie[movieDataFromPanel[0]].rating){
+      if (movie2.rating >= movie1.rating){
         console.log("higher1")
         setScore(score+1)
-        showRating()
-        getData()
+        showRating(whichPanel)
+        getData("2")
         
         changePanel("#34b233")
       }
@@ -152,7 +174,7 @@ function App() {
         console.log("lower2")
         const a =document.getElementsByClassName("toHide")[0]
         changePanel("#ff2a26")
-        showRating()
+        showRating(whichPanel)
         
         setTimeout(() => {removePanels()},3000)
 
@@ -160,8 +182,6 @@ function App() {
     }
 
     }
-
-
 
 
   function RandomMovie(image,name,year,rating,numVotes) {
@@ -171,50 +191,23 @@ function App() {
     this.rating = rating;
     this.numVotes = numVotes;
   }
+  const testing= () =>{
+    console.log("hello")
+  }
 
+  function test23(){
+    console.log(movie1)
+    console.log(movie2)
+  }
 
-  const setUpGame = () => {
-    document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
-    setLost(false)
-    setScore(0)
-    const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
-        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
-      }
-    };
-    setisLoading(true)
-    fetch(url, options)
-    .then(response =>  response.json())
-    .then(data=> data.results[0])
-    .then(data =>{
-        const ratingUrl = `https://moviesdatabase.p.rapidapi.com/titles/${data.id}/ratings` 
-        fetch(ratingUrl,options)
-        .then(response => response.json())
-        .then(rating=>{
-            rating = rating.results
-            console.log(rating)
-            console.log(movie)
-
-            setMovie([...movie, new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes)]) 
-
-            if (movie.length>=2){
-              setisLoading(false)
-            }
-
-        })
-    })
+  function changetest(){
+    setMovie1("hwllo")
   }
 
   const test = (props) =>{
     console.log(props)
   }
 
-  useEffect(() => {
-    setUpGame()
-  }, [movie.length === 1])
 
   if(isLoading === true) {
     return (      
@@ -229,12 +222,13 @@ function App() {
     return (
       <div className="App" id="outerApp">
         {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
-        
-        <div className="toHide">
-          <Panel onClick={[compare, ,test]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie[1]}></Panel>
+        {!start ? <button onClick={setUpGame}>bbbbbbbbbbbb</button>:null}
+        {start ?         <div className="toHide">
+          <Panel onClick={[compare, ,test]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie1}></Panel>
           <Or score={score}></Or>
-          <Panel onClick={[compare,,test]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie[2]}></Panel>
-        </div>
+          <Panel onClick={[compare,,test]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie2}></Panel>
+        </div>: null}
+
       </div>
     );
   }
@@ -266,23 +260,33 @@ function Or(props){
 }
 
 function Lost(props){
-  if (props.isLost){
-    return (
-      <div className="lost" id="hideLost">
-        <div className="inner">
-        You lost !
-        <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
-        </div>
-
+  return (
+    <div className="lost" id="hideLost">
+      <div className="inner">
+      You lost !
+      <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
       </div>
-    )
-  }
-  else{
-    return(null) 
-  }
 
+    </div>
+  )
 }
 
+
+
+
+function StartGame(props){
+  return (
+    <div className="lost" id="hideLost">
+      <div className="inner">
+      You lost !
+      <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
+      </div>
+
+    </div>
+  )
+  
+
+}
 
 
 export default App;

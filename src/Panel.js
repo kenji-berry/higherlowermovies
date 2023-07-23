@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react"
 
 
 function Panel(props){
-  console.log(props)
-
-
-    console.log(props)
     let movie = props.movie
     let clickfunction = props.onClick
+    console.log(props)
 
-    console.log(movie)
 
     return(
       <div>
