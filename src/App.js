@@ -74,7 +74,8 @@ function App() {
     document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
     let panels = document.getElementsByClassName("panel")
     panels = Array.prototype.slice.call(panels)
-    const changePanel = (element) =>{
+    const resetChangePanel = (element) =>{
+      element.style.transition="1s"
       element.style.borderColor="#708090"
     }
     let ratingPanel = document.getElementsByClassName("rating")
@@ -82,7 +83,7 @@ function App() {
     ratingPanel = ratingPanel[parseInt(whichPanel)-1]
     ratingPanel.style.display="none"
     ratingPanel.style.opacity="0"
-    panels.forEach(changePanel)
+    panels.forEach(resetChangePanel)
   }
 
   const compare = (whichPanel,movieDataFromPanel)=>{
@@ -125,6 +126,7 @@ function App() {
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
+        element.style.transition="0.5s"
         element.style.borderColor=colour
       }
       panels.forEach(changePanel)
@@ -134,9 +136,9 @@ function App() {
       if (movie1.rating >= movie2.rating){
         setScore(score+1)
         showRating(whichPanel)
-        getData("1",true,1500,list)
+        getData("1",true,900,list)
         changePanel("#66cd00","#5bb800")
-        setTimeout(() => {resetPanel(whichPanel)},3000)
+        setTimeout(() => {resetPanel(whichPanel)},2600)
       }
       else{
         changePanel("#990000","#b20000")
@@ -148,9 +150,9 @@ function App() {
       if (movie2.rating >= movie1.rating){
         setScore(score+1)
         showRating(whichPanel)
-        getData("2",true,1500, list)
+        getData("2",true,900, list)
         changePanel("#66cd00","#5bb800")
-        setTimeout(() => {resetPanel(whichPanel)},3000)
+        setTimeout(() => {resetPanel(whichPanel)},2600)
       }
       else{
         changePanel("#990000","#b20000")
