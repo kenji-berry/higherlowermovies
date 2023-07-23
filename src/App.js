@@ -32,8 +32,8 @@ function App() {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': `${process.env.REACT_APP_RAPID_API_KEY}`,
-        'X-RapidAPI-Host': `${process.env.REACT_APP_RAPID_API_HOST}`,
+        'X-RapidAPI-Key': `3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59`,
+        'X-RapidAPI-Host': `moviesdatabase.p.rapidapi.com`,
       }
     };
 
