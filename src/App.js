@@ -19,10 +19,7 @@ function App() {
     setScore(0)
     getData("1", false,0)
     getData("2", true,0)
-
   }
-
-
 
   function getData(whichPanel, ready, delay){
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
@@ -79,9 +76,7 @@ function App() {
     ratingPanel = ratingPanel[parseInt(whichPanel)-1]
     ratingPanel.style.display="none"
     ratingPanel.style.opacity="0"
-
     panels.forEach(changePanel)
-
   }
 
   const compare = (whichPanel,movieDataFromPanel)=>{
@@ -119,9 +114,6 @@ function App() {
       }
     }
 
-
-
-
     const changePanel = (colour) =>{        
       document.getElementById("outerApp").style.backgroundColor = colour
       let panels = document.getElementsByClassName("panel")
@@ -132,8 +124,6 @@ function App() {
       }
       panels.forEach(changePanel)
     }
-
-    console.log(whichPanel)
 
     if (whichPanel === "1"){
       if (movie1.rating >= movie2.rating){
@@ -173,9 +163,7 @@ function App() {
 
       }
     }
-
     }
-
 
   function RandomMovie(image,name,year,rating,numVotes) {
     this.image = image;
@@ -184,23 +172,6 @@ function App() {
     this.rating = rating;
     this.numVotes = numVotes;
   }
-  const testing= () =>{
-    console.log("hello")
-  }
-
-  function test23(){
-    console.log(movie1)
-    console.log(movie2)
-  }
-
-  function changetest(){
-    setMovie1("hwllo")
-  }
-
-  const test = (props) =>{
-    console.log(props)
-  }
-
 
   if(isLoading === true) {
     return (      
@@ -210,16 +181,15 @@ function App() {
     )
   }
 
-
   else{
     return (
       <div className="App" id="outerApp">
         {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
         {!start ? <button onClick={setUpGame}>bbbbbbbbbbbb</button>:null}
         {start ?         <div className="toHide">
-          <Panel onClick={[compare, ,test]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie1}></Panel>
+          <Panel onClick={[compare]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie1}></Panel>
           <Or score={score}></Or>
-          <Panel onClick={[compare,,test]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie2}></Panel>
+          <Panel onClick={[compare]} setPanelNum={setPanelNum} panelNumber="2" panelNumArr={panelNum} movie={movie2}></Panel>
         </div>: null}
 
       </div>
