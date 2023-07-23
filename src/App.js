@@ -5,6 +5,7 @@ import Or from "./Components/Or/Or.js"
 import StartGame from "./Components/StartGame/StartGame.js";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
+
 function App() {
   let [movie1,setMovie1] = useState({})
   let [movie2,setMovie2] = useState({})
@@ -30,11 +31,11 @@ function App() {
     const options = {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': '3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59',
-        'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
+        'X-RapidAPI-Key': `${process.env.REACT_APP_RAPID_API_KEY}`,
+        'X-RapidAPI-Host': `${process.env.REACT_APP_RAPID_API_HOST}`,
       }
     };
-
+    
     fetch(url, options)
     .then(response =>  response.json())
     .then(data=> data.results[0])
