@@ -11,19 +11,21 @@ function App() {
   const [score,setScore] = useState(0)
   const[lost,setLost] = useState(false)
   const [start,setStart] = useState(false)
+  const [list,setList] = useState("")
 
-  function setUpGame(){
+  function setUpGame(list){
+    setList(list)
     document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
     setisLoading(true)
     setLost(false)
     setScore(0)
-    getData("1", false,0)
-    getData("2", true,0)
+    getData("1", false,0, list)
+    getData("2", true,0, list)
   }
 
-  function getData(whichPanel, ready, delay){
+  function getData(whichPanel, ready, delay, list){
     console.log(arguments)
-    const url = `https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=most_pop_movies`;
+    const url = `https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=${list}`;
     const options = {
       method: 'GET',
       headers: {
@@ -46,10 +48,18 @@ function App() {
           console.log(rating)
           setTimeout(() => {setRandomMovie(whichPanel,data,rating, ready)},delay)
         })
+        .catch(error =>{
+          console.log(error)
+        })
+    })
+    .catch(error =>{
+      console.log(error)
     })
   }
+  
 
   const setRandomMovie = (whichPanel,data,rating, ready) =>{
+
     if (whichPanel == "1"){
       setMovie1(new RandomMovie(data.primaryImage.url,data.originalTitleText.text,data.releaseYear.year,rating.averageRating,rating.numVotes))
     }
@@ -127,14 +137,13 @@ function App() {
     }
 
     if (whichPanel === "1"){
-
       if (movie1.rating >= movie2.rating){
         console.log("higher1")
         setScore(score+1)
         changePanel("#34b233")
         showRating(whichPanel)
 
-        getData("1",true,1500)
+        getData("1",true,1500,list)
         setTimeout(() => {resetPanel(whichPanel)},3000)
 
         
@@ -148,13 +157,12 @@ function App() {
       }
     }
     else{
-
       if (movie2.rating >= movie1.rating){
         console.log("higher1")
         setScore(score+1)
         
         showRating(whichPanel)
-        getData("2",true,1500)
+        getData("2",true,1500, list)
         changePanel("#34b233")
         setTimeout(() => {resetPanel(whichPanel)},3000)
       }
@@ -189,8 +197,8 @@ function App() {
   else{
     return (
       <div className="App" id="outerApp">
-        {lost ? <Lost isLost={lost} newGame={setUpGame}></Lost> : null}
-        {!start ? <StartGame newGame={setUpGame}></StartGame>:null}
+        {lost ? <StartGame newGame={setUpGame} lost={lost}></StartGame> : null}
+        {!start ? <StartGame newGame={setUpGame} lost={lost}></StartGame>:null}
         {start ?         <div className="toHide">
           <Panel onClick={[compare]} setPanelNum={setPanelNum} panelNumber="1" panelNumArr={panelNum} movie={movie1}></Panel>
           <Or score={score}></Or>
@@ -227,27 +235,24 @@ function Or(props){
   )
 }
 
-function Lost(props){
-  return (
-    <div className="lost" id="hideLost">
-      <div className="inner">
-      You lost !
-      <button type="button" onClick={props.newGame} id="playAgainButton">Play Again</button>
-      </div>
-
-    </div>
-  )
-}
-
-
-
 
 function StartGame(props){
+  function getSelectedList(){
+    const selectedList = document.getElementById("listSelect").value
+    return selectedList
+  }
+
   return (
     <div className="lost" id="hideLost">
       <div className="inner">
+      {props.lost ? <h3>You Lost !</h3>: null}
       <h1>Which movie has a higher rating game</h1>
-      <button type="button" onClick={props.newGame} id="playAgainButton">Start Game</button>
+      <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton">{props.lost ? "Go Again":"Start Game"}</button>
+        <select name="listSelect" id="listSelect">
+          <option value="top_rated_english_250">Top 250 English Movies (default) </option>
+          <option value="top_rated_250">Top 250 Movies </option>
+          <option value="top_boxoffice_200">Top 200 All Time Box Office Movies</option>
+        </select>
       </div>
 
     </div>
