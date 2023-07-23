@@ -54,15 +54,15 @@ function StartGame(props){
   
         <div className="flex flex-col  p-6 rounded-xl shadow-2xl fixed backdrop-blur-sm">
             {props.lost ? <h3 className="text-4xl font-extrabold ">You Lost !</h3>: null}
-            <h1 className="text-4xl pt-4 pb-2 font-bold">Which movie has a higher rating game</h1>
-            <p>Developed by <a target="blank" href="https://github.com/kenji-berry" className="font-medium text-orange-400 hover:underline">Kenji</a></p>
+            <h1 className="text-4xl pt-4 pb-2 font-bold">Higher or Lower Movies</h1>
+            <p>Developed by <a target="blank" href="https://github.com/kenji-berry" className="font-medium text-orange-400 hover:underline duration-200">Kenji</a></p>
 
             <div className="pb-4 pt-2">
                 <h3 className="font-semibold text-xl">How to play</h3>
                 <p className="text-xl">Two random movies will appear, select the movie you think has a higher rating according to IMDb.</p>
             </div>
 
-            <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton" className="bg-zinc-950 text-white p-4 hover:bg-zinc-400">{props.lost ? "Go Again":"Start Game"}</button>
+            <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton" className="bg-zinc-950 text-white p-4 hover:bg-zinc-400 duration-500">{props.lost ? "Go Again":"Start Game"}</button>
             
             <select name="listSelect" id="listSelect" className="p-4">
                 <option value="top_rated_english_250">Top 250 English Movies (Default) </option>
