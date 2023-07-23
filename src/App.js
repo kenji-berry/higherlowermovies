@@ -92,24 +92,15 @@ function App() {
     }
 
     const showRating = () =>{
-      
-      let count=0
       let ratingsShow = document.getElementsByClassName("rating")
       ratingsShow  = Array.prototype.slice.call(ratingsShow)
       const changePanelRating = (element,panelNum) =>{
-        let endValue = 0 ;
-        if(panelNum === 0){
-          endValue = movie1.rating
-        }
-        else if (panelNum === 1){
-          endValue = movie2.rating
-        }
-        
+        let endValue = 0;
+        if(panelNum === 0){endValue = movie1.rating}
+        else if (panelNum === 1){endValue = movie2.rating}
         element.style.display="block"
         element.style.opacity="100"
         let startValue=1;
-        
-        console.log(endValue)
         let duration = 30
         let counter = setInterval(function(){
           duration+=100
@@ -151,6 +142,7 @@ function App() {
         changePanel("#34b233")
         showRating(whichPanel)
         getData("1",true,1500)
+        setTimeout(() => {resetPanel(whichPanel)},3000)
 
         
       }
@@ -169,6 +161,7 @@ function App() {
         showRating(whichPanel)
         getData("2",true,1500)
         changePanel("#34b233")
+        setTimeout(() => {resetPanel(whichPanel)},3000)
       }
       else{
         console.log("lower2")
