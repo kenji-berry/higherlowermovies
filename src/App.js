@@ -17,14 +17,14 @@ function App() {
     setisLoading(true)
     setLost(false)
     setScore(0)
-    getData("1", false)
-    getData("2", true)
+    getData("1", false,0)
+    getData("2", true,0)
 
   }
 
 
 
-  function getData(whichPanel, ready){
+  function getData(whichPanel, ready, delay){
     const url = 'https://moviesdatabase.p.rapidapi.com/titles/random?limit=1&list=top_rated_english_250';
     const options = {
       method: 'GET',
@@ -46,7 +46,7 @@ function App() {
           rating = rating.results
           console.log(data)
           console.log(rating)
-          setRandomMovie(whichPanel,data,rating, ready)
+          setTimeout(() => {setRandomMovie(whichPanel,data,rating, ready)},delay)
         })
     })
   }
@@ -92,23 +92,23 @@ function App() {
     }
 
     const showRating = () =>{
-
-      console.log(movie1)
+      
       let count=0
       let ratingsShow = document.getElementsByClassName("rating")
       ratingsShow  = Array.prototype.slice.call(ratingsShow)
-      const changePanel = (element,panelNum) =>{
+      const changePanelRating = (element,panelNum) =>{
+        let endValue = 0 ;
+        if(panelNum === 0){
+          endValue = movie1.rating
+        }
+        else if (panelNum === 1){
+          endValue = movie2.rating
+        }
+        
         element.style.display="block"
         element.style.opacity="100"
         let startValue=1;
-        let endValue =movie1.rating;
-
-        if (whichPanel === "2"){
-          endValue = movie2.rating;
-        }
-
-  
-
+        
         console.log(endValue)
         let duration = 30
         let counter = setInterval(function(){
@@ -124,7 +124,7 @@ function App() {
         
       }
       for(let i=0 ; i<ratingsShow.length;i++){
-        changePanel(ratingsShow[i],i)
+        changePanelRating(ratingsShow[i],i)
       }
     }
 
@@ -150,7 +150,8 @@ function App() {
         setScore(score+1)
         changePanel("#34b233")
         showRating(whichPanel)
-        getData("1")
+        getData("1",true,1500)
+
         
       }
       else{
@@ -166,8 +167,7 @@ function App() {
         console.log("higher1")
         setScore(score+1)
         showRating(whichPanel)
-        getData("2")
-        
+        getData("2",true,1500)
         changePanel("#34b233")
       }
       else{
