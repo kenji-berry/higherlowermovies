@@ -80,17 +80,11 @@ function App() {
   // function which resets all of the styling applied when an answer is correct
   const resetPanel = (whichPanel) =>{    
     document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
-    let panels = document.getElementsByClassName("panel")
-    panels = Array.prototype.slice.call(panels)
-    const resetChangePanel = (element) =>{
-      element.style.borderColor="#708090"
-    }
     let ratingPanel = document.getElementsByClassName("rating")
     ratingPanel = Array.prototype.slice.call(ratingPanel)
     ratingPanel = ratingPanel[parseInt(whichPanel)-1]
     ratingPanel.style.display="none"
     ratingPanel.style.opacity="0"
-    panels.forEach(resetChangePanel)
   }
 
   //compares the two numbers, and does all things encapsulated within 
@@ -132,14 +126,8 @@ function App() {
     }
 
     // changes the colour/ does all the effects when an answer is right/wrong
-    const changePanel = (colour, coloursecond) =>{        
-      document.getElementById("outerApp").style.backgroundColor = coloursecond
-      let panels = document.getElementsByClassName("panel")
-      panels = Array.prototype.slice.call(panels)
-      const changePanel = (element) =>{
-        element.style.borderColor=colour
-      }
-      panels.forEach(changePanel)
+    const changePanel = (colour) =>{        
+      document.getElementById("outerApp").style.backgroundColor = colour
     }
 
     if (whichPanel === "1"){
@@ -147,11 +135,11 @@ function App() {
         setScore(score+1)
         showRating(whichPanel)
         getData("1",true,900,list)
-        changePanel("#66cd00","#5bb800")
+        changePanel("#5bb800")
         setTimeout(() => {resetPanel(whichPanel)},2600)
       }
       else{
-        changePanel("#990000","#b20000")
+        changePanel("#b20000")
         showRating(whichPanel)
         setTimeout(() => {removePanels()},3000)
       }
@@ -161,11 +149,11 @@ function App() {
         setScore(score+1)
         showRating(whichPanel)
         getData("2",true,900, list)
-        changePanel("#66cd00","#5bb800")
+        changePanel("#5bb800")
         setTimeout(() => {resetPanel(whichPanel)},2600)
       }
       else{
-        changePanel("#990000","#b20000")
+        changePanel("#b20000")
         showRating(whichPanel)
         setTimeout(() => {removePanels()},3000)
       }
