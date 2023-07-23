@@ -36,7 +36,7 @@ function App() {
       method: 'GET',
       headers: {
         // get your own FREE API key at https://rapidapi.com/SAdrian/api/moviesdatabase
-        'X-RapidAPI-Key': `api key`,
+        'X-RapidAPI-Key': `3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59`,
         'X-RapidAPI-Host': `moviesdatabase.p.rapidapi.com`,
       }
     };
