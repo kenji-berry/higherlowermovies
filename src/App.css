@@ -56,17 +56,63 @@
   height: 100vh;
 }
 
-.lost{
+.App{
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
-.inner{
+
+.backgroundAnimation{
+  position:fixed;
   display: flex;
-  flex-direction: column;
-  background-color: red;
+
 }
 
+.colour1{
+  background: #ffa500;
+  box-shadow: 0 0 0 10px #ffa50044,
+  0 0 50px #ffa500,
+  0 0 100px #ffa500;
+}
+
+
+.colour2{
+  background: 	#00FFFF;
+  box-shadow: 0 0 0 10px 	#00FFFF44,
+  0 0 50px 	#00FFFF,
+  0 0 100px #00FFFF;
+}
+
+.toAnimate{
+  position:relative;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  border-radius: calc(1px *  var(--time));
+  animation: animateUp 15s linear infinite;
+  animation-duration: calc(150s/var(--time));
+}
+
+@keyframes animateUp
+{
+  0%
+  {
+    transform: translateY(100vh) scale(0);
+  }
+  100%
+  {
+    transform: translateY(-100vh) scale(1);
+  }
+  
+}
+
+#hideLost{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

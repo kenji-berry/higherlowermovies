@@ -12,6 +12,7 @@ function App() {
   const[lost,setLost] = useState(false)
   const [start,setStart] = useState(false)
   const [list,setList] = useState("")
+  const [error,setError] = useState("")
 
   function setUpGame(list){
     setList(list)
@@ -49,11 +50,13 @@ function App() {
           setTimeout(() => {setRandomMovie(whichPanel,data,rating, ready)},delay)
         })
         .catch(error =>{
-          console.log(error)
+          setError("Could not fetch data for movie")
+          setStart(false)
         })
     })
     .catch(error =>{
-      console.log(error)
+      setError("Could not fetch data for movie")
+      setStart(false)
     })
   }
   
@@ -79,7 +82,7 @@ function App() {
     let panels = document.getElementsByClassName("panel")
     panels = Array.prototype.slice.call(panels)
     const changePanel = (element) =>{
-      element.style.borderColor="#FFFFFF"
+      element.style.borderColor="#708090"
       element.style.transform="scale(1)"
     }
     let ratingPanel = document.getElementsByClassName("rating")
@@ -125,8 +128,8 @@ function App() {
       }
     }
 
-    const changePanel = (colour) =>{        
-      document.getElementById("outerApp").style.backgroundColor = colour
+    const changePanel = (colour, coloursecond) =>{        
+      document.getElementById("outerApp").style.backgroundColor = coloursecond
       let panels = document.getElementsByClassName("panel")
       panels = Array.prototype.slice.call(panels)
       const changePanel = (element) =>{
@@ -140,7 +143,7 @@ function App() {
       if (movie1.rating >= movie2.rating){
         console.log("higher1")
         setScore(score+1)
-        changePanel("#34b233")
+        changePanel("#66cd00","#5bb800")
         showRating(whichPanel)
 
         getData("1",true,1500,list)
@@ -150,7 +153,7 @@ function App() {
       }
       else{
         console.log("lower1")
-        changePanel("#ff2a26")
+        changePanel("#990000","#b20000")
         showRating(whichPanel)
         
         setTimeout(() => {removePanels()},3000)
@@ -163,13 +166,14 @@ function App() {
         
         showRating(whichPanel)
         getData("2",true,1500, list)
-        changePanel("#34b233")
+        changePanel("#66cd00","#5bb800")
         setTimeout(() => {resetPanel(whichPanel)},3000)
       }
       else{
         console.log("lower2")
         const a =document.getElementsByClassName("toHide")[0]
-        changePanel("#ff2a26")
+        changePanel("#990000","#b20000")
+
         showRating(whichPanel)
         
         setTimeout(() => {removePanels()},3000)
@@ -189,6 +193,7 @@ function App() {
   if(isLoading === true) {
     return (      
       <div className="loading">
+        <h1>Loading...</h1>
         <PropagateLoader color="#36d7b7" />
       </div>
     )
@@ -197,6 +202,7 @@ function App() {
   else{
     return (
       <div className="App" id="outerApp">
+
         {lost ? <StartGame newGame={setUpGame} lost={lost}></StartGame> : null}
         {!start ? <StartGame newGame={setUpGame} lost={lost}></StartGame>:null}
         {start ?         <div className="toHide">
@@ -244,15 +250,64 @@ function StartGame(props){
 
   return (
     <div className="lost" id="hideLost">
-      <div className="inner">
-      {props.lost ? <h3>You Lost !</h3>: null}
-      <h1>Which movie has a higher rating game</h1>
-      <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton">{props.lost ? "Go Again":"Start Game"}</button>
-        <select name="listSelect" id="listSelect">
-          <option value="top_rated_english_250">Top 250 English Movies (default) </option>
-          <option value="top_rated_250">Top 250 Movies </option>
-          <option value="top_boxoffice_200">Top 200 All Time Box Office Movies</option>
-        </select>
+      <div className="backgroundAnimation">
+        <span style={{"--time": 25}} className="toAnimate colour1"></span>
+        <span style={{"--time": 25}} className="toAnimate colour2"></span>
+        <span style={{"--time": 20}} className="toAnimate colour1"></span>
+        <span style={{"--time": 4}} className="toAnimate colour2"></span>
+        <span style={{"--time": 31}} className="toAnimate colour1"></span>
+        <span style={{"--time": 8}} className="toAnimate colour2"></span>
+        <span style={{"--time": 9}} className="toAnimate colour1"></span>
+        <span style={{"--time": 10}} className="toAnimate colour2"></span>
+        <span style={{"--time": 11}} className="toAnimate colour1"></span>
+        <span style={{"--time": 12}} className="toAnimate colour2"></span>
+        <span style={{"--time": 33}} className="toAnimate colour1"></span>
+        <span style={{"--time": 1}} className="toAnimate colour2"></span>
+        <span style={{"--time": 13}} className="toAnimate colour1"></span>
+        <span style={{"--time": 14}} className="toAnimate colour2"></span>
+        <span style={{"--time": 34}} className="toAnimate colour1"></span>
+        <span style={{"--time": 16}} className="toAnimate colour2"></span>
+        <span style={{"--time": 17}} className="toAnimate colour1"></span>
+        <span style={{"--time": 27}} className="toAnimate colour2"></span>
+        <span style={{"--time": 19}} className="toAnimate colour1"></span>
+        <span style={{"--time": 21}} className="toAnimate colour2"></span>
+        <span style={{"--time": 3}} className="toAnimate colour1"></span>
+        <span style={{"--time": 22}} className="toAnimate colour2"></span>
+        <span style={{"--time": 23}} className="toAnimate colour1"></span>
+        <span style={{"--time": 24}} className="toAnimate colour2"></span>
+        <span style={{"--time": 5}} className="toAnimate colour1"></span>
+        <span style={{"--time": 13}} className="toAnimate colour2"></span>
+        <span style={{"--time": 42}} className="toAnimate colour1"></span>
+        <span style={{"--time": 15}} className="toAnimate colour2"></span>
+        <span style={{"--time": 25}} className="toAnimate colour1"></span>
+        <span style={{"--time": 7}} className="toAnimate colour2"></span>
+        <span style={{"--time": 30}} className="toAnimate colour1"></span>
+        <span style={{"--time": 19}} className="toAnimate colour2"></span>
+        <span style={{"--time": 6}} className="toAnimate colour1"></span>
+        <span style={{"--time": 35}} className="toAnimate colour2"></span>
+        <span style={{"--time": 18}} className="toAnimate colour1"></span>
+        <span style={{"--time": 25}} className="toAnimate colour2"></span>
+        <span style={{"--time": 2}} className="toAnimate colour1"></span>
+        <span style={{"--time": 20}} className="toAnimate colour2"></span>
+        <span style={{"--time": 4}} className="toAnimate colour1"></span>
+        <span style={{"--time": 31}} className="toAnimate colour2"></span>
+        <span style={{"--time": 8}} className="toAnimate colour1"></span>
+      </div>
+
+      <div className="flex flex-col  p-6 rounded-xl shadow-lg fixed backdrop-blur-sm">
+        {props.lost ? <h3>You Lost !</h3>: null}
+        <h1 className="text-4xl p-4">Which movie has a higher rating game</h1>
+        <div className="pb-4 pt-4">
+          <h3>How to play</h3>
+          <p>Two random movies will appear, select the movie you think has a higher rating according to imdb.</p>
+        </div>
+
+        <button type="button" onClick={() => props.newGame(getSelectedList())} id="playAgainButton" className="bg-zinc-950 text-white p-4 hover:bg-zinc-400">{props.lost ? "Go Again":"Start Game"}</button>
+          <select name="listSelect" id="listSelect" className="p-4">
+            <option value="top_rated_english_250">Top 250 English Movies (Default) </option>
+            <option value="top_rated_250">Top 250 Movies </option>
+            <option value="top_boxoffice_200">Top 200 All Time Box Office Movies</option>
+          </select>
       </div>
 
     </div>
