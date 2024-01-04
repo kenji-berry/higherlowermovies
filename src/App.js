@@ -6,7 +6,7 @@ import Or from "./Components/Or/Or.js"
 import StartGame from "./Components/StartGame/StartGame.js";
 import PropagateLoader from "react-spinners/PropagateLoader";
 
-
+//test comment
 function App() {
   //all state variables
   let [movie1,setMovie1] = useState({})
