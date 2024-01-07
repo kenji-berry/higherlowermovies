@@ -107,7 +107,7 @@ function App() {
         element.style.display="block"
         element.style.opacity="100"
         let startValue=1;
-        let duration = 30
+        let duration = 17;
         let counter = setInterval(function(){
           duration+=100
           startValue+=0.1;
@@ -118,7 +118,6 @@ function App() {
             clearInterval(counter)
           }
         }, duration)
-        
       }
       for(let i=0 ; i<ratingsShow.length;i++){
         changePanelRating(ratingsShow[i],i)
@@ -126,10 +125,12 @@ function App() {
     }
 
     // changes the colour/ does all the effects when an answer is right/wrong
-    const changePanel = (colour) =>{        
-      document.getElementById("outerApp").style.backgroundColor = colour
-    }
-
+    const changePanel = (colour) => {
+      const outerApp = document.getElementById("outerApp");
+      outerApp.style.transition = "background-color 0.5s ease-in-out";
+      outerApp.style.backgroundColor = colour;
+   }
+   
     if (whichPanel === "1"){
       if (movie1.rating >= movie2.rating){
         setScore(score+1)
