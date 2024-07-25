@@ -35,7 +35,7 @@ function App() {
     const options = {
       method: 'GET',
       headers: {
-        // get your own FREE API key at https://rapidapi.com/SAdrian/api/moviesdatabase
+        // get your own FREE API key at https://rapidapi.com/SAdrian/api/moviesdatabase , showing for demonstration purposes, I have a set limit on the key 
         'X-RapidAPI-Key': `3d73a62809msh2aaaeab14d79a03p1edeabjsn3ff2daa48d59`,
         'X-RapidAPI-Host': `moviesdatabase.p.rapidapi.com`,
       }
