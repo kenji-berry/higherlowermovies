@@ -21,7 +21,7 @@ function App() {
   // function to call all other relevant functions and set states to start the game
   function setUpGame(list){
     setList(list)
-    document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
+    document.getElementById("outerApp").style.background = "linear-gradient(135deg, #fea034 0%, #90fefc 100%)" 
     setisLoading(true)
     setLost(false)
     setScore(0)
@@ -79,7 +79,7 @@ function App() {
 
   // function which resets all of the styling applied when an answer is correct
   const resetPanel = (whichPanel) =>{    
-    document.getElementById("outerApp").style.backgroundColor = "#FFFFFF" 
+    document.getElementById("outerApp").style.background = "linear-gradient(135deg, #fea034 0%, #90fefc 100%)"
     let ratingPanel = document.getElementsByClassName("rating")
     ratingPanel = Array.prototype.slice.call(ratingPanel)
     ratingPanel = ratingPanel[parseInt(whichPanel)-1]
@@ -128,7 +128,7 @@ function App() {
     const changePanel = (colour) => {
       const outerApp = document.getElementById("outerApp");
       outerApp.style.transition = "background-color 0.5s ease-in-out";
-      outerApp.style.backgroundColor = colour;
+      outerApp.style.background = colour;
    }
    
     if (whichPanel === "1"){

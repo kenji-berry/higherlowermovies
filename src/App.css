@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap");
 
-.App, .toHide {
+.App,
+.toHide {
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -10,23 +11,28 @@
   height: 100vh;
 }
 
-.app{
+.App {
+  background: linear-gradient(135deg, #fea034 0%, #90fefc 100%);
+}
+
+.app {
   background-color: deepskyblue;
 }
 
-.toHide{
+.toHide {
   visibility: visible;
   opacity: 100;
 }
 
-.loading{
+.loading {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background: linear-gradient(135deg, #fea034 0%, #90fefc 100%);
 }
 
-.App{
+.App {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,10 +42,8 @@
   overflow: hidden;
 }
 
-
 @media only screen and (max-width: 768px) {
-  .toHide{
+  .toHide {
     flex-direction: column;
   }
-
 }
