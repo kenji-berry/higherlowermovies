@@ -10,4 +10,4 @@ The **Higher or Lower Movie Rating Web Game** is an interactive web game where u
 - **Up-to-Date Ratings**: Utilizes the MoviesDatabase API to fetch current and relevant movie ratings.
 - **Custom Deployment**: Hosted on Netlify with a custom domain, optimized for performance and security.
 
-higherlowermovies.com
+[Hosted here](higherlowermovies.com)
